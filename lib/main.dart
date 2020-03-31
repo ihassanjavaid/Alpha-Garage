@@ -17,3 +17,6 @@ class Alfa extends StatelessWidget {
   }
 }
 
+// TODO Make routes and assign ids
+// TODO Make index page nav bar come in bottom of all pages
+
