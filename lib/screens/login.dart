@@ -1,8 +1,10 @@
 import 'package:alphagarage/components/customTextField.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-enum AuthMode { LOGIN, SINGUP }
+enum AuthMode { LOGIN, SIGNUP }
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             upperHalf(context),
             _authMode == AuthMode.LOGIN
                 ? loginCard(context)
-                : singUpCard(context),
+                : signUpCard(context),
             pageTitle(),
           ],
         ),
@@ -115,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       FlatButton(
                         child: Text("Login"),
-                        color: Color(0xFF4B9DFE),
+                        color: Colors.brown,
                         textColor: Colors.white,
                         padding: EdgeInsets.only(
                             left: 38, right: 38, top: 15, bottom: 15),
@@ -124,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {},
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -144,19 +146,34 @@ class _LoginPageState extends State<LoginPage> {
             FlatButton(
               onPressed: () {
                 setState(() {
-                  _authMode = AuthMode.SINGUP;
+                  _authMode = AuthMode.SIGNUP;
                 });
               },
               textColor: Colors.black87,
               child: Text("Create Account"),
             ),
           ],
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+            child: SizedBox(
+              height: 50,
+              width: double.maxFinite,
+              child: SignInButton(
+                Buttons.Facebook,
+                text: 'Sign in with Facebook',
+                onPressed: ()
+                {
+                  // TODO implement Facebook Login
+                },
+              ),
+            ),
+        ),
       ],
     );
   }
 
-  Widget singUpCard(BuildContext context) {
+  Widget signUpCard(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
@@ -199,7 +216,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   CustomTextField(
-                    placeholder: 'Password',
+                    placeholder: 'Your Password',
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: 20,
@@ -219,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       FlatButton(
                         child: Text("Sign Up"),
-                        color: Color(0xFF4B9DFE),
+                        color: Colors.brown,
                         textColor: Colors.white,
                         padding: EdgeInsets.only(
                             left: 38, right: 38, top: 15, bottom: 15),

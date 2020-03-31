@@ -1,9 +1,9 @@
-import 'package:alphagarage/login.dart';
+import 'package:alphagarage/screens/login.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Alfa());
 
-class MyApp extends StatelessWidget {
+class Alfa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
