@@ -1,3 +1,4 @@
+import 'package:alphagarage/components/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -89,16 +90,15 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Your Email", hasFloatingPlaceholder: true),
+                  CustomTextField(
+                    placeholder: 'Email',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Password", hasFloatingPlaceholder: true),
+                  CustomTextField(
+                    placeholder: "Password",
+                    isPassword: true,
                   ),
                   SizedBox(
                     height: 20,
