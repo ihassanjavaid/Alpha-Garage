@@ -41,19 +41,19 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: EdgeInsets.only(top: 50),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(
             FontAwesomeIcons.car,
-            size: 48,
+            size: 50,
             color: Colors.white,
           ),
           Text(
-            "Alfa's Garage",
+            "  Alfa's Garage",
             style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
-          )
+                fontSize: 40, color: Colors.white, fontWeight: FontWeight.w400),
+          ),
         ],
       ),
     );
@@ -64,10 +64,10 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(top: screenHeight / 4),
-          padding: EdgeInsets.only(left: 10, right: 10),
+          padding: EdgeInsets.only(left: 5, right: 5),
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
             ),
             elevation: 12,
             child: Padding(
@@ -279,7 +279,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       height: screenHeight / 2,
       child: Image.asset(
-        'images/garage.jpg',
+        'images/cars.jpg',
         fit: BoxFit.cover,
       ),
     );
