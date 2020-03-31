@@ -15,6 +15,9 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final TextInputType keyboardType;
 
+  final int minLines;
+  final int maxLines;
+
   CustomTextField(
       {@required this.placeholder,
         this.cursorColor = Colors.brown,
@@ -22,11 +25,15 @@ class CustomTextField extends StatelessWidget {
         this.focusedOutlineBorder = Colors.brown,
         this.onChanged,
         this.isPassword = false,
-        this.keyboardType});
+        this.keyboardType,
+        this.minLines = 1, this.maxLines = 1
+      });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: this.minLines,
+      maxLines: this.maxLines,
       obscureText: this.isPassword,
       cursorColor: this.cursorColor,
       decoration: InputDecoration(

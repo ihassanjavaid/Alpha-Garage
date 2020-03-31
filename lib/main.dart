@@ -1,3 +1,5 @@
+import 'package:alphagarage/screens/announcement.dart';
+import 'package:alphagarage/screens/contacts.dart';
 import 'package:alphagarage/screens/login.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,7 @@ class Alfa extends StatelessWidget {
     return MaterialApp(
       title: "Alpha's Garage",
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: Contacts(),
     );
   }
 }
