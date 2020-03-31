@@ -186,23 +186,20 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Your Name", hasFloatingPlaceholder: true),
+                  CustomTextField(
+                    placeholder: 'Your Name',
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Your Email", hasFloatingPlaceholder: true),
+                  CustomTextField(
+                    placeholder: 'Your Email',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Password", hasFloatingPlaceholder: true),
+                  CustomTextField(
+                    placeholder: 'Password',
                   ),
                   SizedBox(
                     height: 20,
