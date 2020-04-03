@@ -5,6 +5,7 @@ import 'package:alphagarage/components/customTextField.dart';
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
+
   @override
   _AnnouncementState createState() => _AnnouncementState();
 }
