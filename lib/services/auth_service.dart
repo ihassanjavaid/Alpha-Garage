@@ -27,6 +27,7 @@ class Auth {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
+      print(e);
       throw 'User already exists';
     }
   }

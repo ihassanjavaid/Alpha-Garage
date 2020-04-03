@@ -1,5 +1,6 @@
 import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/services/auth_service.dart';
+import 'package:alphagarage/services/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -283,6 +284,8 @@ class _LoginState extends State<Login> {
                                 email: this.email, password: this.password);
                             await _auth.updateUserInfo(
                                 displayName: displayName);
+                            await FirestoreService()
+                                .registerUser(email: this.email);
                             Navigator.popAndPushNamed(context, Index.id);
                           } catch (e) {
                             print(e);

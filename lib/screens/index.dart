@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alphagarage/components/constants.dart';
+import 'package:alphagarage/utilities/constants.dart';
 
 class Index extends StatefulWidget {
   Index({this.screens});
