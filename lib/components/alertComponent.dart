@@ -9,6 +9,7 @@ class AlertComponent{
       type: AlertType.warning,
       title: title,
       desc: description,
+      buttons: [
         DialogButton(
           color: Colors.brown,
           child: Text(
