@@ -27,8 +27,11 @@ class _LoginState extends State<Login> {
   // Data Attributes
   String email;
   String password;
+  String displayName;
 
   Auth _auth = Auth();
+
+  String removeSpaces(String email) => email.replaceAll(' ','');
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +145,7 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           try {
                             await _auth.loginUserWithEmailAndPassword(
-                                email: this.email, password: this.password);
+                                email: removeSpaces(this.email), password: this.password);
                             Navigator.popAndPushNamed(context, Index.id);
                           } catch (e) {
                             print(e);
@@ -197,7 +200,6 @@ class _LoginState extends State<Login> {
   }
 
   Widget signUpCard(BuildContext context) {
-    String displayName;
 
     return Column(
       children: <Widget>[
@@ -231,7 +233,7 @@ class _LoginState extends State<Login> {
                   CustomTextField(
                     placeholder: 'Your Name',
                     onChanged: (value) {
-                      displayName = value;
+                      this.displayName = value;
                     },
                   ),
                   SizedBox(
@@ -280,11 +282,11 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           try {
                             await _auth.registerUser(
-                                email: this.email, password: this.password);
+                                email: removeSpaces(this.email), password: this.password);
                             await _auth.updateUserInfo(
-                                displayName: displayName);
+                                displayName: this.displayName);
                             await FirestoreService().registerUser(
-                                email: this.email, displayName: displayName);
+                                email: removeSpaces(this.email), displayName: this.displayName);
                             Navigator.popAndPushNamed(context, Index.id);
                           } catch (e) {
                             print(e);

@@ -104,37 +104,30 @@ class ListItemWidget extends State<SwipeList> {
               height: 90.0,
               child: Row(
                 children: <Widget>[
-                  /* Container(
+                   Container(
                     height: 70.0,
                     width: 70.0,
-                    child: CircularProfileAvatar(
-                      "",
-                      backgroundColor: Colors.grey,
-                      initialsText: Text(
-                        friendsDataList != null
-                            ? friendsDataList[index].displayName[0]
-                            : 'A',
-                        style: TextStyle(
-                          fontSize: 42,
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                      child: CircularProfileAvatar(
+                        "",
+                        backgroundColor: Colors.grey,
+                        initialsText: Text(
+                          friendsDataList != null
+                              ? friendsDataList[index].displayName[0]
+                              : 'A',
+                          style: TextStyle(
+                            fontSize: 42,
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
-                      ),
-                      elevation: 10.0,
+                        elevation: 10.0,
 //                borderColor: Colors.brown,
 //                borderWidth: 3,
+                      ),
                     ),
-                    */ /*decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            topLeft: Radius.circular(20)),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://i.ya-webdesign.com/images/funny-png-avatar-2.png")
-                        ),
-                    ),*/ /*
-                  ),*/
+                  ),
                   Container(
                     //width: double.infinity,
                     height: 100,
@@ -158,14 +151,14 @@ class ListItemWidget extends State<SwipeList> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                             child: Container(
-                              width: 50,
+                              width: 58,
                               decoration: BoxDecoration(
                                   color: Colors.green,
                                   border: Border.all(color: Colors.green),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               child: Text(
-                                "Online",
+                                "Worker",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
@@ -177,7 +170,8 @@ class ListItemWidget extends State<SwipeList> {
                             child: Container(
                               width: 260,
                               child: Text(
-                                "Tap to view liked restaurants",
+                                "Tap to message",
+                                // TODO add message functionality
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontStyle: FontStyle.italic,
