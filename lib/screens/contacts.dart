@@ -1,4 +1,5 @@
 import 'package:alphagarage/components/addContactDialog.dart';
+import 'package:alphagarage/components/speedDialButton.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -21,7 +22,7 @@ class Contacts extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         title: AutoSizeText(
-          'Contacts',
+          'People',
           overflow: TextOverflow.clip,
           maxLines: 1,
           style: kAppBarTextStyle,
@@ -31,46 +32,7 @@ class Contacts extends StatelessWidget {
       body: Center(
         child: SwipeList(),
       ),
-      floatingActionButton: SpeedDial(
-          marginRight: 18,
-          marginBottom: 20,
-          animatedIcon: AnimatedIcons.menu_close,
-          animatedIconTheme: IconThemeData(size: 29.0),
-        visible: true,
-        closeManually: true,
-        curve: Curves.bounceIn,
-        overlayColor: Colors.white,
-        overlayOpacity: 1,
-        //onOpen: () => print('OPENING DIAL'),
-        //onClose: () => print('DIAL CLOSED'),
-        tooltip: 'Speed Dial',
-        heroTag: 'speed-dial-hero-tag',
-        backgroundColor: Colors.brown,
-        foregroundColor: Colors.white,
-        elevation: 10.0,
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-              child: Icon(FontAwesomeIcons.doorOpen),
-              backgroundColor: Colors.red,
-              label: 'Sign out',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () {
-                // TODO Add Sign out functionality
-              },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.person_add),
-            backgroundColor: Colors.green,
-            label: 'Add User',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () {
-              ContactDialog().addContact(context);
-            },
-          ),
-        ],
-      ),
-
+      floatingActionButton: SpeedDialButton().showButton(context),
       );
   }
 }
