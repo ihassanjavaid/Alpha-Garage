@@ -2,6 +2,7 @@ import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/screens/index.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddContact{
@@ -94,11 +95,26 @@ class AddContact{
               ButtonTheme(
                 minWidth: double.maxFinite,
                 child: FlatButton(
-                  child: Text("Add User"),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Add User",
+                      style: TextStyle(
+                        fontSize: 17
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: Icon(
+                          Icons.person_add
+                        ),
+                      )
+                    ],
+                  ),
                   color: Colors.brown,
                   textColor: Colors.white,
                   padding: EdgeInsets.only(
-                      left: 38, right: 38, top: 15, bottom: 15),
+                      left: 38, right: 38, top: 12, bottom: 12),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   onPressed: () async {
