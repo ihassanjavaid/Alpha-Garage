@@ -1,3 +1,4 @@
+import 'package:alphagarage/components/alertComponent.dart';
 import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'index.dart';
 
 enum AuthMode { LOGIN, SIGNUP }
@@ -31,7 +33,7 @@ class _LoginState extends State<Login> {
 
   Auth _auth = Auth();
 
-  String removeSpaces(String email) => email.replaceAll(' ','');
+  String removeSpaces(String email) => email.replaceAll(' ', '');
 
   @override
   Widget build(BuildContext context) {
@@ -145,9 +147,16 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           try {
                             await _auth.loginUserWithEmailAndPassword(
-                                email: removeSpaces(this.email), password: this.password);
+                                email: removeSpaces(this.email),
+                                password: this.password);
                             Navigator.popAndPushNamed(context, Index.id);
                           } catch (e) {
+                            AlertComponent()
+                                .generateAlert(
+                                    context: context,
+                                    title: "Invalid Credentials",
+                                    description: e)
+                                .show();
                             print(e);
                           }
                         },
@@ -200,7 +209,6 @@ class _LoginState extends State<Login> {
   }
 
   Widget signUpCard(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Container(
@@ -271,27 +279,38 @@ class _LoginState extends State<Login> {
                       Expanded(
                         child: Container(),
                       ),
-                      FlatButton(
-                        child: Text("Sign Up"),
-                        color: Colors.brown,
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () async {
-                          try {
-                            await _auth.registerUser(
-                                email: removeSpaces(this.email), password: this.password);
-                            await _auth.updateUserInfo(
-                                displayName: this.displayName);
-                            await FirestoreService().registerUser(
-                                email: removeSpaces(this.email), displayName: this.displayName);
-                            Navigator.popAndPushNamed(context, Index.id);
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                        child: FlatButton(
+                          child: Text("Sign Up"),
+                          color: Colors.brown,
+                          textColor: Colors.white,
+                          padding: EdgeInsets.only(
+                              left: 38, right: 38, top: 15, bottom: 15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () async {
+                            try {
+                              await _auth.registerUser(
+                                  email: removeSpaces(this.email),
+                                  password: this.password);
+                              await _auth.updateUserInfo(
+                                  displayName: this.displayName);
+                              await FirestoreService().registerUser(
+                                  email: removeSpaces(this.email),
+                                  displayName: this.displayName);
+                              Navigator.popAndPushNamed(context, Index.id);
+                            } catch (e) {
+                              AlertComponent()
+                                  .generateAlert(
+                                  context: context,
+                                  title: "Error",
+                                  description: e)
+                                  .show();
+                              print(e);
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),
