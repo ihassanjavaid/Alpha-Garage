@@ -10,20 +10,27 @@ class Contacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.brown,
-          ),
-          backgroundColor: Colors.white,
-          title: AutoSizeText(
-            'Contacts',
-            overflow: TextOverflow.clip,
-            maxLines: 1,
-            style: kAppBarTextStyle,
-          ),
-          centerTitle: false,
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.brown,
         ),
-        body: Center(child: SwipeList()));
+        backgroundColor: Colors.white,
+        title: AutoSizeText(
+          'Contacts',
+          overflow: TextOverflow.clip,
+          maxLines: 1,
+          style: kAppBarTextStyle,
+        ),
+        centerTitle: false,
+      ),
+      body: Center(
+        child: SwipeList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.contacts),
+      ),
+    );
   }
 }
 
