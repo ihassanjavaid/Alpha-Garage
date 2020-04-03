@@ -50,7 +50,6 @@ class _IndexState extends State<Index> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.brown,
         onTap: _onItemTapped,
-        backgroundColor: Colors.grey,
       ),
     );
   }

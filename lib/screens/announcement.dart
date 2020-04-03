@@ -23,21 +23,24 @@ class _AnnouncementState extends State<Announcement> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Announcement',
-                      style: kAnnounceTextStyle,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: Icon(
-                        Icons.comment,
-                        color: Colors.brown,
-                        size: 32,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        'Announcement',
+                        style: kAnnounceTextStyle,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                        child: Icon(
+                          Icons.comment,
+                          color: Colors.brown,
+                          size: 32,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Card(
                   elevation: 8,
