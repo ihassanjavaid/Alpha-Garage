@@ -277,9 +277,16 @@ class _LoginState extends State<Login> {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          _auth.registerUser(
-                              email: this.email, password: this.password);
+                        onPressed: () async {
+                          try {
+                            await _auth.registerUser(
+                                email: this.email, password: this.password);
+                            await _auth.updateUserInfo(
+                                displayName: displayName);
+                            Navigator.popAndPushNamed(context, Index.id);
+                          } catch (e) {
+                            print(e);
+                          }
                         },
                       ),
                     ],

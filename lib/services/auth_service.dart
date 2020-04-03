@@ -31,6 +31,22 @@ class Auth {
     }
   }
 
+  Future<void> updateUserInfo({
+    String displayName = '',
+    String photoURL = '',
+  }) async {
+    final userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.displayName = displayName;
+    userUpdateInfo.photoUrl = photoURL;
+    try {
+      final currentUser = await _auth.currentUser();
+      currentUser.updateProfile(userUpdateInfo);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
   Future<bool> updateUserPassword(String newPassword) async {
     FirebaseUser user = await _auth.currentUser();
 

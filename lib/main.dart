@@ -12,7 +12,7 @@ class Alfa extends StatelessWidget {
     return MaterialApp(
       title: "Alpha's Garage",
       debugShowCheckedModeBanner: false,
-      initialRoute: Index.id,
+      initialRoute: Login.id,
       routes: {
         Login.id: (context) => Login(),
         Index.id: (context) => Index(
