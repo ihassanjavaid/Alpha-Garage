@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore: ^0.13.4+2
   rflutter_alert: ^1.0.2
   circular_profile_avatar: ^1.0.6
+  connectivity: ^0.4.8+2
 
 dev_dependencies:
   flutter_test:

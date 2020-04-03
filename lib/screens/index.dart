@@ -2,21 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:alphagarage/components/constants.dart';
 
 class Index extends StatefulWidget {
+  Index({this.screens});
+
   static const String id = 'index_screen';
+  final List<Widget> screens;
   @override
   _IndexState createState() => _IndexState();
 }
 
 class _IndexState extends State<Index> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var _selectedIndex = 0;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: true,
       body: IndexedStack(
         index: _selectedIndex,
-        //children: widget.screens,
+        children: widget.screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -39,8 +49,8 @@ class _IndexState extends State<Index> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.brown,
-        //onTap: _onItemTapped,
-        //backgroundColor: Colors.grey,
+        onTap: _onItemTapped,
+        backgroundColor: Colors.grey,
       ),
     );
   }

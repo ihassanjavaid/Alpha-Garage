@@ -12,10 +12,15 @@ class Alfa extends StatelessWidget {
     return MaterialApp(
       title: "Alpha's Garage",
       debugShowCheckedModeBanner: false,
-      initialRoute: Login.id,
+      initialRoute: Index.id,
       routes: {
         Login.id: (context) => Login(),
-        Index.id: (context) => Index(),
+        Index.id: (context) => Index(
+              screens: <Widget>[
+                Announcement(),
+                Contacts(),
+              ],
+            ),
         Contacts.id: (context) => Contacts(),
         Announcement.id: (context) => Announcement(),
       },

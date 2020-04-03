@@ -1,4 +1,5 @@
 import 'package:alphagarage/components/customTextField.dart';
+import 'package:alphagarage/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +22,12 @@ class _LoginState extends State<Login> {
 
   // Set initial mode to login
   AuthMode _authMode = AuthMode.LOGIN;
+
+  // Data Attributes
+  String email;
+  String password;
+
+  Auth _auth = Auth();
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +103,9 @@ class _LoginState extends State<Login> {
                   ),
                   CustomTextField(
                     placeholder: 'Email',
+                    onChanged: (value) {
+                      this.email = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -103,6 +113,9 @@ class _LoginState extends State<Login> {
                   CustomTextField(
                     placeholder: "Password",
                     isPassword: true,
+                    onChanged: (value) {
+                      this.password = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -125,8 +138,14 @@ class _LoginState extends State<Login> {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          // TODO Login to main screen
+                        onPressed: () async {
+                          try {
+                            await _auth.loginUserWithEmailAndPassword(
+                                email: this.email, password: this.password);
+                            Navigator.popAndPushNamed(context, Index.id);
+                          } catch (e) {
+                            print(e);
+                          }
                           Navigator.pushNamed(context, Index.id);
                         },
                       )
@@ -178,6 +197,8 @@ class _LoginState extends State<Login> {
   }
 
   Widget signUpCard(BuildContext context) {
+    String displayName;
+
     return Column(
       children: <Widget>[
         Container(
@@ -209,12 +230,18 @@ class _LoginState extends State<Login> {
                   ),
                   CustomTextField(
                     placeholder: 'Your Name',
+                    onChanged: (value) {
+                      displayName = value;
+                    },
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   CustomTextField(
                     placeholder: 'Your Email',
+                    onChanged: (value) {
+                      this.email = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -222,6 +249,9 @@ class _LoginState extends State<Login> {
                   CustomTextField(
                     placeholder: 'Your Password',
                     isPassword: true,
+                    onChanged: (value) {
+                      this.password = value;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -247,7 +277,10 @@ class _LoginState extends State<Login> {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
+                        onPressed: () {
+                          _auth.registerUser(
+                              email: this.email, password: this.password);
+                        },
                       ),
                     ],
                   ),
