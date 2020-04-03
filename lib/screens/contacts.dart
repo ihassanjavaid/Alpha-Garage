@@ -71,6 +71,7 @@ class ListItemWidget extends State<SwipeList> {
     }
   }
 */
+
   @override
   Widget build(BuildContext context) {
     //_acquireUserData();

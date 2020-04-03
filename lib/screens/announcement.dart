@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/components/constants.dart';
 import 'package:alphagarage/components/customTextField.dart';
@@ -16,7 +17,7 @@ class _AnnouncementState extends State<Announcement> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Container(
-            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             height: double.infinity,
             width: double.infinity,
             child: Column(
@@ -27,16 +28,16 @@ class _AnnouncementState extends State<Announcement> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
-                      Text(
-                        'Announcement',
+                      AutoSizeText(
+                        'Make an\nAnnouncement',
                         style: kAnnounceTextStyle,
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
                         child: Icon(
                           Icons.comment,
-                          color: Colors.brown,
-                          size: 32,
+                          color: Colors.grey,
+                          size: 52,
                         ),
                       ),
                     ],
