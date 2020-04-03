@@ -3,8 +3,9 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class Contacts extends StatelessWidget {
+  static const String id = 'contacts_screen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +44,7 @@ class ListItemWidget extends State<SwipeList> {
 
   @override
   void initState() {
-   // getFriends();
+    // getFriends();
     super.initState();
   }
 
@@ -75,11 +76,11 @@ class ListItemWidget extends State<SwipeList> {
     //_acquireUserData();
     return Container(
         child: ListView.builder(
-          itemCount: friendsDataList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                /*Navigator.push(
+      itemCount: friendsDataList.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => FriendDetails(
@@ -88,34 +89,34 @@ class ListItemWidget extends State<SwipeList> {
                     ),
                   ),
                 );*/
-              },
-              child: Card(
-                elevation: 10,
-                child: Container(
-                  height: 90.0,
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        height: 70.0,
-                        width: 70.0,
-                        child: CircularProfileAvatar(
-                          "",
-                          backgroundColor: Colors.grey,
-                          initialsText: Text(
-                            friendsDataList[index] != null
-                                ? friendsDataList[index]['displayName'][0]
-                                : 'A',
-                            style: TextStyle(
-                              fontSize: 42,
-                              color: Colors.white,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                          elevation: 10.0,
+          },
+          child: Card(
+            elevation: 10,
+            child: Container(
+              height: 90.0,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    height: 70.0,
+                    width: 70.0,
+                    child: CircularProfileAvatar(
+                      "",
+                      backgroundColor: Colors.grey,
+                      initialsText: Text(
+                        friendsDataList[index] != null
+                            ? friendsDataList[index]['displayName'][0]
+                            : 'A',
+                        style: TextStyle(
+                          fontSize: 42,
+                          color: Colors.white,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      elevation: 10.0,
 //                borderColor: Colors.brown,
 //                borderWidth: 3,
-                        ),
-                        /*decoration: BoxDecoration(
+                    ),
+                    /*decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20),
                             topLeft: Radius.circular(20)),
@@ -125,68 +126,68 @@ class ListItemWidget extends State<SwipeList> {
                                 "https://i.ya-webdesign.com/images/funny-png-avatar-2.png")
                         ),
                     ),*/
-                      ),
-                      Container(
-                        //width: double.infinity,
-                        height: 100,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              AutoSizeText(
-                                friendsDataList[index] != null
-                                    ? friendsDataList[index]['displayName']
-                                    : 'Anonymous User',
-                                maxLines: 1,
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.brown,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                                child: Container(
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      border: Border.all(color: Colors.green),
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                                  child: Text(
-                                    "Online",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
-                                child: Container(
-                                  width: 260,
-                                  child: Text(
-                                    "Tap to view liked restaurants",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontStyle: FontStyle.italic,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
                   ),
-                ),
+                  Container(
+                    //width: double.infinity,
+                    height: 100,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          AutoSizeText(
+                            friendsDataList[index] != null
+                                ? friendsDataList[index]['displayName']
+                                : 'Anonymous User',
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.brown,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                            child: Container(
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  border: Border.all(color: Colors.green),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Text(
+                                "Online",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                            child: Container(
+                              width: 260,
+                              child: Text(
+                                "Tap to view liked restaurants",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-            );
-            /*Dismissible(
+            ),
+          ),
+        );
+        /*Dismissible(
               key: Key(items[index]),
               background: Container(
                 alignment: AlignmentDirectional.centerEnd,
@@ -297,8 +298,8 @@ class ListItemWidget extends State<SwipeList> {
                 ),
               ),
             );*/
-          },
-        ));
+      },
+    ));
   }
 
 /*  void _acquireUserData() async {

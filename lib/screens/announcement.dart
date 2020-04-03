@@ -3,6 +3,7 @@ import 'package:alphagarage/components/constants.dart';
 import 'package:alphagarage/components/customTextField.dart';
 
 class Announcement extends StatefulWidget {
+  static const String id = 'announcement_screen';
   @override
   _AnnouncementState createState() => _AnnouncementState();
 }
@@ -77,16 +78,12 @@ class _AnnouncementState extends State<Announcement> {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       'Upload a picture',
-                                      style: TextStyle(
-                                          color: Colors.white
-                                      ),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ],
                               ),
-                              onPressed: () {
-
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ),
@@ -113,22 +110,18 @@ class _AnnouncementState extends State<Announcement> {
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
                             'Announce!',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
                     ),
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                   ),
                 ),
               ],
             ),
           ),
-          ),
+        ),
       ),
     );
   }
