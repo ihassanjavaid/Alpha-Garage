@@ -1,5 +1,4 @@
 import 'package:alphagarage/components/customTextField.dart';
-import 'package:alphagarage/screens/index.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:flutter/cupertino.dart';

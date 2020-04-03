@@ -1,4 +1,3 @@
-import 'package:alphagarage/components/addContactDialog.dart';
 import 'package:alphagarage/components/speedDialButton.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/userData.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Contacts extends StatelessWidget {
   static const String id = 'contacts_screen';
