@@ -88,7 +88,9 @@ class _AnnouncementState extends State<Announcement> {
                                   ),
                                 ],
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                // TODO add functonality
+                              },
                             ),
                           ),
                         ),

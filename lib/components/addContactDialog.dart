@@ -22,15 +22,14 @@ class ContactDialog {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            child: _signUpCard(context),
+            child: _addUserContainer(context),
           );
         });
   }
 
-  Widget _signUpCard(BuildContext context) {
+  Widget _addUserContainer(BuildContext context) {
     return Container(
-      height: 430,
-      //width: 20,
+      height: 450,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -39,22 +38,56 @@ class ContactDialog {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Add User",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                    child: Text(
+                      "Add User",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                    Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
+                    child: DropdownButton<String>(
+                      value: 'User',
+                      icon: Icon(Icons.people, color: Colors.brown),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: TextStyle(color: Colors.brown, fontSize: 24),
+                      underline: SizedBox(
+                        width: double.maxFinite,
+                        child: Container(
+                          height: 2,
+                          color: Colors.brown,
+                        ),
+                      ),
+                      onChanged: (String newValue) {
+                        /*setState(() {
+                    dropdownValue = newValue;
+                });*/
+                      },
+                      items: <String>['User', 'Admin']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: CustomTextField(
-                placeholder: 'Your Name',
+                placeholder: 'Name',
                 onChanged: (value) {
                   this.displayName = value;
                 },
@@ -63,7 +96,7 @@ class ContactDialog {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: CustomTextField(
-                placeholder: 'Your Email',
+                placeholder: 'Email',
                 onChanged: (value) {
                   this.email = value;
                 },
@@ -72,7 +105,7 @@ class ContactDialog {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
               child: CustomTextField(
-                placeholder: 'Your Password',
+                placeholder: 'Password',
                 isPassword: true,
                 onChanged: (value) {
                   this.password = value;

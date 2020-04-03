@@ -1,3 +1,4 @@
+import 'package:alphagarage/components/sendMessage.dart';
 import 'package:alphagarage/components/speedDialButton.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -95,7 +96,10 @@ class ListItemWidget extends State<SwipeList> {
       itemCount: friendsDataList != null ? friendsDataList.length : 0,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            // TODO make it work
+            MessageDialog().announce(context);
+          },
           child: Card(
             elevation: 10,
             child: Container(
