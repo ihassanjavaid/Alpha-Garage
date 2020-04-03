@@ -16,12 +16,8 @@ class _UserMessagesState extends State<UserMessages> {
           color: Colors.brown,
         ),
         backgroundColor: Colors.white,
-        title: AutoSizeText(
-          'Announcements',
-          overflow: TextOverflow.clip,
-          maxLines: 1,
-          style: kAppBarTextStyle
-        ),
+        title: AutoSizeText('Announcements',
+            overflow: TextOverflow.clip, maxLines: 1, style: kAppBarTextStyle),
         centerTitle: false,
       ),
     );
