@@ -39,7 +39,7 @@ dependencies:
   rflutter_alert: ^1.0.2
   circular_profile_avatar: ^1.0.6
   connectivity: ^0.4.8+2
-  flutter_speed_dial: ^1.2.5
+  image_picker: ^0.6.4
 
 dev_dependencies:
   flutter_test:
