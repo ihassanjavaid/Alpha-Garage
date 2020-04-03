@@ -1,3 +1,4 @@
+import 'package:alphagarage/components/addContactDialog.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -29,8 +30,12 @@ class Contacts extends StatelessWidget {
         child: SwipeList(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.contacts),
+        onPressed: () {
+          // TODO add contact
+          AddContact().addContact(context);
+        },
+        child: Icon(Icons.person_add),
+        backgroundColor: Colors.brown,
       ),
     );
   }

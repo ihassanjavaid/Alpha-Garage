@@ -96,31 +96,34 @@ class _AnnouncementState extends State<Announcement> {
                     ),
                   ),
                 ),
-                ButtonTheme(
-                  minWidth: double.infinity,
-                  height: 50,
-                  child: RaisedButton(
-                    focusColor: Colors.brown,
-                    autofocus: true,
-                    color: Colors.brown,
-                    elevation: 10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.comment,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Announce!',
-                            style: TextStyle(color: Colors.white),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
+                  child: ButtonTheme(
+                    minWidth: double.maxFinite,
+                    height: 50,
+                    child: RaisedButton(
+                      focusColor: Colors.brown,
+                      autofocus: true,
+                      color: Colors.brown,
+                      elevation: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.comment,
+                            color: Colors.white,
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Announce!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                 ),
               ],
