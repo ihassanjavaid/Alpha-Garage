@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "554157651571",
+    "firebase_url": "https://alfas-garage.firebaseio.com",
+    "project_id": "alfas-garage",
+    "storage_bucket": "alfas-garage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554157651571:android:4e403cee959c4525f99c06",
+        "android_client_info": {
+          "package_name": "cui.alphagarage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554157651571-6um13q76qtcgss63gcedcsou57tctk7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAM9gGVvECxjNv7jHiZZC7G0iZ6nVGGJyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554157651571-6um13q76qtcgss63gcedcsou57tctk7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
