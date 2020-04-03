@@ -2,7 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:alphagarage/components/customTextField.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
 
