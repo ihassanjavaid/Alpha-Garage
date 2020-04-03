@@ -60,6 +60,7 @@ flutter:
   assets:
     - images/garage.jpg
     - images/cars.jpg
+    - images/icon.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
