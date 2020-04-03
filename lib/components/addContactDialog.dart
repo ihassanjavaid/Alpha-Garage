@@ -100,7 +100,7 @@ class AddContact{
                     children: <Widget>[
                       Text("Add User",
                       style: TextStyle(
-                        fontSize: 17
+                        fontSize: 17,
                       ),
                       ),
                       Padding(
