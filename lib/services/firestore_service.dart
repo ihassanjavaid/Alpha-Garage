@@ -9,7 +9,7 @@ class FirestoreService {
     String email,
     bool isAdmin = false,
   }) async {
-    DocumentReference documentReference = _firestore.collection().document();
+    DocumentReference documentReference = _firestore.collection('users').document();
     await documentReference.setData({'email': email, 'isAdmin': isAdmin});
   }
 }
