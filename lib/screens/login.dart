@@ -8,6 +8,7 @@ import 'index.dart';
 enum AuthMode { LOGIN, SIGNUP }
 
 class Login extends StatefulWidget {
+  static const String id = 'login_screen';
   @override
   _LoginState createState() => _LoginState();
 }
@@ -18,7 +19,7 @@ class _LoginState extends State<Login> {
   // calculate the screen height
   double screenHeight;
 
-  // Set intial mode to login
+  // Set initial mode to login
   AuthMode _authMode = AuthMode.LOGIN;
 
   @override
@@ -126,7 +127,7 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
                           // TODO Login to main screen
-                          Navigator.push(context, MaterialPageRoute( builder: (context) => Index() ));
+                          Navigator.pushNamed(context, Index.id);
                         },
                       )
                     ],
@@ -160,18 +161,17 @@ class _LoginState extends State<Login> {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-            child: SizedBox(
-              height: 50,
-              width: double.maxFinite,
-              child: SignInButton(
-                Buttons.Facebook,
-                text: 'Sign in with Facebook',
-                onPressed: ()
-                {
-                  // TODO implement Facebook Login
-                },
-              ),
+          child: SizedBox(
+            height: 50,
+            width: double.maxFinite,
+            child: SignInButton(
+              Buttons.Facebook,
+              text: 'Sign in with Facebook',
+              onPressed: () {
+                // TODO implement Facebook Login
+              },
             ),
+          ),
         ),
       ],
     );

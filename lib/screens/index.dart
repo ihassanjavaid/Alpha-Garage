@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:alphagarage/components/constants.dart';
 
 class Index extends StatefulWidget {
+  static const String id = 'index_screen';
   @override
   _IndexState createState() => _IndexState();
 }
 
 class _IndexState extends State<Index> {
-
   @override
   Widget build(BuildContext context) {
     var _selectedIndex = 0;
