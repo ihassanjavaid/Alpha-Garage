@@ -147,7 +147,6 @@ class _LoginState extends State<Login> {
                           } catch (e) {
                             print(e);
                           }
-                          Navigator.pushNamed(context, Index.id);
                         },
                       )
                     ],
@@ -284,8 +283,8 @@ class _LoginState extends State<Login> {
                                 email: this.email, password: this.password);
                             await _auth.updateUserInfo(
                                 displayName: displayName);
-                            await FirestoreService()
-                                .registerUser(email: this.email);
+                            await FirestoreService().registerUser(
+                                email: this.email, displayName: displayName);
                             Navigator.popAndPushNamed(context, Index.id);
                           } catch (e) {
                             print(e);

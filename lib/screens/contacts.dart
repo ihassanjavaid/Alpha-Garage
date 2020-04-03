@@ -3,6 +3,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:alphagarage/services/firestore_service.dart';
+import 'package:alphagarage/utilities/userData.dart';
 
 class Contacts extends StatelessWidget {
   static const String id = 'contacts_screen';
@@ -42,14 +44,25 @@ class SwipeList extends StatefulWidget {
 }
 
 class ListItemWidget extends State<SwipeList> {
-  List friendsDataList = [];
+  List<UserData> friendsDataList;
   //UserData userData;
   //final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
-    // getFriends();
     super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    final tempHolder = await FirestoreService().getAllUsers();
+    for (UserData user in tempHolder) {
+      print(user.displayName);
+      print(user.email);
+    }
+    setState(() {
+      friendsDataList = tempHolder;
+    });
   }
 
   /*void getFriends() async {
@@ -81,35 +94,25 @@ class ListItemWidget extends State<SwipeList> {
     //_acquireUserData();
     return Container(
         child: ListView.builder(
-      itemCount: friendsDataList.length,
+      itemCount: friendsDataList != null ? friendsDataList.length : 0,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {
-            /*Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FriendDetails(
-                      phoneNumber: friendsDataList[index]['phoneNo'],
-                      name: friendsDataList[index]['displayName'],
-                    ),
-                  ),
-                );*/
-          },
+          onTap: () {},
           child: Card(
             elevation: 10,
             child: Container(
               height: 90.0,
               child: Row(
                 children: <Widget>[
-                  Container(
+                  /* Container(
                     height: 70.0,
                     width: 70.0,
                     child: CircularProfileAvatar(
                       "",
                       backgroundColor: Colors.grey,
                       initialsText: Text(
-                        friendsDataList[index] != null
-                            ? friendsDataList[index]['displayName'][0]
+                        friendsDataList != null
+                            ? friendsDataList[index].displayName[0]
                             : 'A',
                         style: TextStyle(
                           fontSize: 42,
@@ -121,7 +124,7 @@ class ListItemWidget extends State<SwipeList> {
 //                borderColor: Colors.brown,
 //                borderWidth: 3,
                     ),
-                    /*decoration: BoxDecoration(
+                    */ /*decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20),
                             topLeft: Radius.circular(20)),
@@ -130,8 +133,8 @@ class ListItemWidget extends State<SwipeList> {
                             image: NetworkImage(
                                 "https://i.ya-webdesign.com/images/funny-png-avatar-2.png")
                         ),
-                    ),*/
-                  ),
+                    ),*/ /*
+                  ),*/
                   Container(
                     //width: double.infinity,
                     height: 100,
@@ -141,8 +144,8 @@ class ListItemWidget extends State<SwipeList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           AutoSizeText(
-                            friendsDataList[index] != null
-                                ? friendsDataList[index]['displayName']
+                            friendsDataList != null
+                                ? friendsDataList[index].displayName
                                 : 'Anonymous User',
                             maxLines: 1,
                             overflow: TextOverflow.clip,
