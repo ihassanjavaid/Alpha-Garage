@@ -79,5 +79,10 @@ const Icon kPeopleIconActive = Icon(
   color: Colors.brown,
 );
 
+const TextStyle kAppBarTextStyle = TextStyle(
+fontSize: 30,
+fontStyle: FontStyle.normal,
+color: Colors.brown,
+);
 
 
