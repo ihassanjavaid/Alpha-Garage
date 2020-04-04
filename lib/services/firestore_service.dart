@@ -27,6 +27,21 @@ class FirestoreService {
     return deviceToken;
   }
 
+  postToken() async {
+    final deviceToken = await getDeviceToken();
+
+    final tokens = await _firestore.collection('deviceTokens').getDocuments();
+
+    for (var token in tokens.documents) {
+      if (deviceToken == token) return;
+    }
+
+    DocumentReference documentReference =
+        _firestore.collection('deviceTokens').document();
+
+    await documentReference.setData({'deviceToken': deviceToken});
+  }
+
   Future<void> registerUser({
     String displayName,
     String email,

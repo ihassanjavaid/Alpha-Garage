@@ -39,17 +39,17 @@ class _UserMessagesState extends State<UserMessages> {
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
       print('onMessage: $message');
-      _setNotification(message);
+      _setNotification(message, true);
     }, onLaunch: (Map<String, dynamic> message) async {
       print('onLaunch: $message');
-      _setNotification(message);
+      _setNotification(message, false);
     }, onResume: (Map<String, dynamic> message) async {
       print('onResume: $message');
-      _setNotification(message);
+      _setNotification(message, false);
     });
   }
 
-  _setNotification(Map<String, dynamic> message) {
+  _setNotification(Map<String, dynamic> message, bool alert) {
     final notification = message['notification'];
     final data = message['data'];
     final String title = notification['title'];
@@ -60,6 +60,27 @@ class _UserMessagesState extends State<UserMessages> {
           NotificationData(title: title, body: body, message: mMessage);
       _notifications.add(n);
     });
+    if (alert) {
+      setState(() {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: title,
+          desc: mMessage,
+          buttons: [
+            DialogButton(
+              color: Colors.redAccent,
+              child: Text(
+                "Ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      });
+    }
   }
 
   refresh() {

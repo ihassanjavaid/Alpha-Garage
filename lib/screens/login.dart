@@ -172,6 +172,7 @@ class _LoginState extends State<Login> {
                             await _auth.loginUserWithEmailAndPassword(
                                 email: removeSpaces(this.email),
                                 password: this.password);
+                            await _firestoreService.postToken();
                             await _decideRoute();
                           } catch (e) {
                             AlertComponent()
