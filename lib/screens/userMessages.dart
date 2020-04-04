@@ -68,8 +68,7 @@ class _UserMessagesState extends State<UserMessages> {
               final messageType = message.data['messageType'];
               if (messageType == 'privateMessage') {
                 try {
-                  if (currentUser.email != messageText['receiverEmail'])
-                    continue;
+                  if (currentUser.email != message['receiverEmail']) continue;
                 } catch (_) {}
               }
               final messageWidget = AnnouncementBubble(
@@ -91,10 +90,12 @@ class _UserMessagesState extends State<UserMessages> {
 }
 
 class AnnouncementBubble extends StatelessWidget {
-  AnnouncementBubble({this.messageText, this.messageTitle});
+  AnnouncementBubble(
+      {this.messageText, this.messageTitle, this.isPrivate = false});
 
   final String messageText;
   final String messageTitle;
+  final bool isPrivate;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +117,7 @@ class AnnouncementBubble extends StatelessWidget {
             child: Material(
               borderRadius: BorderRadius.circular(8.5),
               elevation: 5.0,
-              color: Colors.grey,
+              color: !isPrivate ? Colors.grey : Colors.redAccent,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,
