@@ -3,9 +3,10 @@ import 'package:alphagarage/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:alphagarage/screens/login.dart';
 
 class SpeedDialButton {
-  showButton(context) {
+  showAdminSpeedDial(context) {
     return SpeedDial(
       marginRight: 18,
       marginBottom: 20,
@@ -47,7 +48,7 @@ class SpeedDialButton {
     );
   }
 
-  showUserSpeedDial(){
+  showUserSpeedDial(context){
     return SpeedDial(
       marginRight: 18,
       marginBottom: 20,
@@ -71,8 +72,9 @@ class SpeedDialButton {
           backgroundColor: Colors.red,
           label: 'Sign out',
           labelStyle: TextStyle(fontSize: 18.0),
-          onTap: () {
-            // TODO Add Sign out functionality
+          onTap: () async {
+            await Auth().signOut();
+            Navigator.pushReplacementNamed(context, Login.id);
           },
         ),
         SpeedDialChild(
