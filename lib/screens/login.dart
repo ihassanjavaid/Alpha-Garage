@@ -34,11 +34,23 @@ class _LoginState extends State<Login> {
   String displayName;
 
   Auth _auth = Auth();
+  FirestoreService _firestoreService = FirestoreService();
+
+  @override
+  initState() {
+    super.initState();
+    getDeviceToken();
+  }
+
+  void getDeviceToken() async {
+    final token = await _firestoreService.getDeviceToken();
+    print(token);
+  }
 
   Future<void> _decideRoute() async {
     final currentUser = await _auth.getCurrentUser();
     final currentUserData =
-        await FirestoreService().getUserData(currentUser.email);
+        await _firestoreService.getUserData(currentUser.email);
 
     if (currentUserData.isAdmin)
       Navigator.pushReplacementNamed(context, Index.id);

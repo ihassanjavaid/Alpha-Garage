@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:alphagarage/utilities/userData.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 enum MessageType {
   announcement,
@@ -19,6 +20,12 @@ Future<void> checkInternConnection() async {
 class FirestoreService {
   final _firestore = Firestore();
   final _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  getDeviceToken() async {
+    final deviceToken = await _firebaseMessaging.getToken();
+    return deviceToken;
+  }
 
   Future<void> registerUser({
     String displayName,
@@ -26,11 +33,15 @@ class FirestoreService {
     bool isAdmin = false,
   }) async {
     await checkInternConnection();
-
+    final deviceToken = await _firebaseMessaging.getToken();
     DocumentReference documentReference =
         _firestore.collection('users').document();
-    await documentReference.setData(
-        {'displayName': displayName, 'email': email, 'isAdmin': isAdmin});
+    await documentReference.setData({
+      'displayName': displayName,
+      'email': email,
+      'isAdmin': isAdmin,
+      'deviceToken': deviceToken
+    });
   }
 
   Future<UserData> getUserData(String email) async {
@@ -94,7 +105,8 @@ class FirestoreService {
       'messageType': messageType == MessageType.announcement
           ? 'announcement'
           : 'privateMessage',
-      'receiverEmail': receiverEmail
+      'receiverEmail': receiverEmail,
+      'timestamp': DateTime.now().millisecondsSinceEpoch
     }, merge: true);
   }
 }

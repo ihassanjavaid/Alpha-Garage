@@ -4,7 +4,9 @@ import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class UserMessages extends StatefulWidget {
   static const String id = 'user_messages_screen';
@@ -14,13 +16,8 @@ class UserMessages extends StatefulWidget {
 
 class _UserMessagesState extends State<UserMessages> {
   final _firestore = Firestore.instance;
-
-  refresh() {
-    setState(() {
-      // TODO Add refresh functionality
-      // How to make this function and call this from the Speed Dial class
-    });
-  }
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  List<NotificationData> _notifications = [];
 
   FirebaseUser currentUser;
 
@@ -28,12 +25,47 @@ class _UserMessagesState extends State<UserMessages> {
   void initState() {
     super.initState();
     getCurrentUser();
+    _configureFirebaseListeners();
   }
 
   void getCurrentUser() async {
     final temp = await Auth().getCurrentUser();
     setState(() {
       this.currentUser = temp;
+    });
+  }
+
+  _configureFirebaseListeners() {
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+      print('onMessage: $message');
+      _setNotification(message);
+    }, onLaunch: (Map<String, dynamic> message) async {
+      print('onLaunch: $message');
+      _setNotification(message);
+    }, onResume: (Map<String, dynamic> message) async {
+      print('onResume: $message');
+      _setNotification(message);
+    });
+  }
+
+  _setNotification(Map<String, dynamic> message) {
+    final notification = message['notification'];
+    final data = message['data'];
+    final String title = notification['title'];
+    final String body = notification['body'];
+    final String mMessage = data['message'];
+    setState(() {
+      NotificationData n =
+          NotificationData(title: title, body: body, message: mMessage);
+      _notifications.add(n);
+    });
+  }
+
+  refresh() {
+    setState(() {
+      // TODO Add refresh functionality
+      // How to make this function and call this from the Speed Dial class
     });
   }
 
@@ -157,4 +189,12 @@ class AnnouncementBubble extends StatelessWidget {
       ),
     );
   }
+}
+
+class NotificationData {
+  String title;
+  String body;
+  String message;
+
+  NotificationData({this.title, this.body, this.message});
 }
