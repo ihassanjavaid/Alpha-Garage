@@ -57,13 +57,13 @@ const TextStyle kOptionStyle =
 TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
 const Icon kAnnouceIcon = Icon(
-  Icons.volume_up,
+  FontAwesomeIcons.bullhorn,
   size: 30,
   color: Colors.grey,
 );
 
 const Icon kAnnouceIconActive = Icon(
-  Icons.volume_up,
+  FontAwesomeIcons.bullhorn,
   size: 30,
   color: Colors.brown ,
 );
