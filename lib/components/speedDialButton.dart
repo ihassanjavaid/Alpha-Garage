@@ -41,14 +41,16 @@ class SpeedDialButton {
           label: 'Add User',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
-            ContactDialog().addContact(context);
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AddContact());
           },
         ),
       ],
     );
   }
 
-  showUserSpeedDial(context){
+  showUserSpeedDial(context) {
     return SpeedDial(
       marginRight: 18,
       marginBottom: 20,
@@ -84,7 +86,7 @@ class SpeedDialButton {
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
             // TODO function to be implemented
-           // UserMessages().refresh();
+            // UserMessages().refresh();
           },
         ),
       ],

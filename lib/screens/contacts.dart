@@ -53,10 +53,6 @@ class ListItemWidget extends State<SwipeList> {
 
   void getUserData() async {
     final tempHolder = await FirestoreService().getAllUsers();
-    for (UserData user in tempHolder) {
-      print(user.displayName);
-      print(user.email);
-    }
     setState(() {
       friendsDataList = tempHolder;
     });
@@ -71,7 +67,6 @@ class ListItemWidget extends State<SwipeList> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            // TODO make it work
             MessageDialog(receiverEmail: friendsDataList[index].email)
                 .announce(context);
           },
@@ -130,12 +125,19 @@ class ListItemWidget extends State<SwipeList> {
                             child: Container(
                               width: 58,
                               decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  border: Border.all(color: Colors.green),
+                                  color: friendsDataList[index].isAdmin
+                                      ? Colors.lightBlue
+                                      : Colors.green,
+                                  border: Border.all(
+                                      color: friendsDataList[index].isAdmin
+                                          ? Colors.lightBlue
+                                          : Colors.green),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               child: Text(
-                                "Worker",
+                                friendsDataList[index].isAdmin
+                                    ? 'Admin'
+                                    : 'Worker',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),

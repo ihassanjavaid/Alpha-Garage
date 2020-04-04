@@ -11,6 +11,8 @@ import 'index.dart';
 
 enum AuthMode { LOGIN, SIGNUP }
 
+String removeSpaces(String email) => email.replaceAll(' ', '');
+
 class Login extends StatefulWidget {
   static const String id = 'login_screen';
   @override
@@ -33,22 +35,15 @@ class _LoginState extends State<Login> {
 
   Auth _auth = Auth();
 
-  String removeSpaces(String email) => email.replaceAll(' ', '');
-
   Future<void> _decideRoute() async {
     final currentUser = await _auth.getCurrentUser();
     final currentUserData =
         await FirestoreService().getUserData(currentUser.email);
 
-    if (currentUserData.isAdmin) {
+    if (currentUserData.isAdmin)
       Navigator.pushReplacementNamed(context, Index.id);
-      /*Navigator.pop(context);
-      Navigator.pushNamed(context, Index.id);*/
-    } else {
+    else
       Navigator.pushReplacementNamed(context, UserMessages.id);
-      /*Navigator.pop(context);
-      Navigator.pushNamed(context, UserMessages.id);*/
-    }
   }
 
   @override

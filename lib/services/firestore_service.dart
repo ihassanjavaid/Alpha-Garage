@@ -68,8 +68,10 @@ class FirestoreService {
     // Get each user
     for (var user in userDocuments.documents) {
       if (user['email'] != currentUser.email) {
-        UserData userData =
-            UserData(displayName: user['displayName'], email: user['email']);
+        UserData userData = UserData(
+            displayName: user['displayName'],
+            email: user['email'],
+            isAdmin: user['isAdmin']);
         users.add(userData);
       }
     }
