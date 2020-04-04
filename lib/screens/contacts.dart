@@ -72,7 +72,8 @@ class ListItemWidget extends State<SwipeList> {
         return GestureDetector(
           onTap: () {
             // TODO make it work
-            MessageDialog().announce(context);
+            MessageDialog(receiverEmail: friendsDataList[index].email)
+                .announce(context);
           },
           child: Card(
             elevation: 10,

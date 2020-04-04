@@ -1,6 +1,8 @@
+import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserMessages extends StatefulWidget {
@@ -11,6 +13,21 @@ class UserMessages extends StatefulWidget {
 
 class _UserMessagesState extends State<UserMessages> {
   final _firestore = Firestore.instance;
+  FirebaseUser currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    final temp = await Auth().getCurrentUser();
+    setState(() {
+      this.currentUser = temp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +57,12 @@ class _UserMessagesState extends State<UserMessages> {
               final messageTitle = message.data['messageTitle'];
               final messageText = message.data['messageText'];
               final messageType = message.data['messageType'];
-              if (messageType == 'privateMessage') continue;
+              if (messageType == 'privateMessage') {
+                try {
+                  if (currentUser.email != messageText['receiverEmail'])
+                    continue;
+                } catch (_) {}
+              }
               final messageWidget = AnnouncementBubble(
                 messageTitle: messageTitle,
                 messageText: messageText,

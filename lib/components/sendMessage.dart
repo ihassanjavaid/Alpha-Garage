@@ -1,24 +1,34 @@
 import 'package:alphagarage/components/customTextField.dart';
+import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class MessageDialog {
+  MessageDialog({this.receiverEmail});
 
-  announce(context){
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: _announcementCard(),
-            );
-          });
+  final String receiverEmail;
+  final FirestoreService _firestoreService = FirestoreService();
+  final messageTitleController = TextEditingController();
+  final messageTextController = TextEditingController();
+
+  announce(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: _announcementCard(),
+          );
+        });
   }
 
   _announcementCard() {
+    String messageTitle;
+    String messageText;
+
     return Container(
       height: 540,
       child: Padding(
@@ -39,6 +49,10 @@ class MessageDialog {
               padding: const EdgeInsets.all(8.0),
               child: CustomTextField(
                 placeholder: 'Title',
+                controller: this.messageTitleController,
+                onChanged: (value) {
+                  messageTitle = value;
+                },
               ),
             ),
             Padding(
@@ -47,6 +61,10 @@ class MessageDialog {
                 placeholder: 'Write Message',
                 minLines: 8,
                 maxLines: null,
+                controller: this.messageTextController,
+                onChanged: (value) {
+                  messageText = value;
+                },
               ),
             ),
             Padding(
@@ -105,7 +123,20 @@ class MessageDialog {
                       ),
                     ],
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    // Push the message to the contact
+                    try {
+                      await _firestoreService.postMessage(
+                          messageTitle: messageTitle,
+                          messageText: messageText,
+                          receiverEmail: this.receiverEmail,
+                          messageType: MessageType.privateMessage);
+                      this.messageTitleController.clear();
+                      this.messageTextController.clear();
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                 ),
               ),
             ),
@@ -114,5 +145,4 @@ class MessageDialog {
       ),
     );
   }
-
 }

@@ -1,21 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:alphagarage/utilities/userData.dart';
+import 'package:connectivity/connectivity.dart';
 
 enum MessageType {
   announcement,
   privateMessage,
 }
 
+Future<void> checkInternConnection() async {
+  final ConnectivityResult connectivityStatus =
+      await (Connectivity().checkConnectivity());
+
+  if (connectivityStatus == ConnectivityResult.none)
+    throw 'No internet connection';
+}
+
 class FirestoreService {
   final _firestore = Firestore();
   final _auth = FirebaseAuth.instance;
+  final _connectivityService = Connectivity();
 
   Future<void> registerUser({
     String displayName,
     String email,
     bool isAdmin = false,
   }) async {
+    await checkInternConnection();
+
     DocumentReference documentReference =
         _firestore.collection('users').document();
     await documentReference.setData(
@@ -24,6 +36,9 @@ class FirestoreService {
 
   Future<UserData> getUserData(String email) async {
     UserData userData;
+
+    await checkInternConnection();
+
     final userDocuments = await _firestore
         .collection('users')
         .where('email', isEqualTo: email)
@@ -42,6 +57,8 @@ class FirestoreService {
 
   Future<List<UserData>> getAllUsers() async {
     List<UserData> users = [];
+
+    await checkInternConnection();
 
     // Get current user
     final currentUser = await _auth.currentUser();
@@ -63,7 +80,10 @@ class FirestoreService {
   Future<void> postMessage(
       {String messageTitle,
       String messageText,
+      String receiverEmail,
       MessageType messageType}) async {
+    await checkInternConnection();
+
     final DocumentReference documentReference =
         _firestore.collection('messages').document();
 
@@ -73,6 +93,7 @@ class FirestoreService {
       'messageType': messageType == MessageType.announcement
           ? 'announcement'
           : 'privateMessage',
-    });
+      'recieverEmail': receiverEmail
+    }, merge: true);
   }
 }
