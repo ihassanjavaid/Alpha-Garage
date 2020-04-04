@@ -183,6 +183,7 @@ class _AnnouncementState extends State<Announcement> {
                               messageText: this.announcementText,
                               messageType: MessageType.announcement);
                           messageTextController.clear();
+                          messageTitleController.clear();
                           _image = null;
                         } catch (e) {
                           print(e);
