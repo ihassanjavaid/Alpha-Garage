@@ -171,7 +171,7 @@ class _LoginState extends State<Login> {
                                 .generateAlert(
                                     context: context,
                                     title: "Invalid Credentials",
-                                    description: e)
+                                    description: e.toString())
                                 .show();
                             print(e);
                           }
