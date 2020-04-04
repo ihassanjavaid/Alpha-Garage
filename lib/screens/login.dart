@@ -315,6 +315,7 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(5)),
                           onPressed: () async {
                             try {
+                              final fixedEmail = removeSpaces(this.email);
                               await _auth.registerUser(
                                   email: removeSpaces(this.email),
                                   password: this.password);
