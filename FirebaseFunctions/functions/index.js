@@ -30,7 +30,7 @@ exports.notificationTrigger = functions.firestore.document('messages/{messageId}
         const response = await admin.messaging().sendToDevice(tokens, payload);
         console.log('Notification sent sucessfully.');
     } catch (err) {
-        console.log('Error sending notification.');
+        console.log('Error sending notification.'+ err);
     }
 
 });
