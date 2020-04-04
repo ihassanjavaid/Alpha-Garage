@@ -19,6 +19,7 @@ class Alfa extends StatelessWidget {
         Index.id: (context) => Index(
               screens: <Widget>[
                 Announcement(),
+                UserMessages(),
                 Contacts(),
               ],
             ),

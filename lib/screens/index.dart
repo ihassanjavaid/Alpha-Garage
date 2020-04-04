@@ -39,6 +39,14 @@ class _IndexState extends State<Index> {
             activeIcon: kAnnouceIconActive,
           ),
           BottomNavigationBarItem(
+            icon: kUserMessagesIcon,
+            title: Text(
+              'Messages',
+              style: kBottomNavTextStyle,
+            ),
+            activeIcon: kUserMessagesIconActive,
+          ),
+          BottomNavigationBarItem(
             icon: kPeopleIcon,
             title: Text(
               'People',
