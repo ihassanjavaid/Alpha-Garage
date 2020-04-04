@@ -12,16 +12,13 @@ exports.notificationTrigger = functions.firestore.document('messages/{messageId}
     }
 
     newData = snapshot.data();
-
+ 
     var tokens = []; 
 
-    const users = await admin.firestore().collection('users').get();
+    const deviceTokens = await admin.firestore().collection('deviceTokens').get();
 
-    for (var user of users.docs) {
-        const deviceTokens = await admin.firestore().collection('users').document(user.data().id).collection('deviceTokens').get();
-        for (var token of deviceTokens.docs) {
-            tokens.push(token.data().device_token);
-        }
+    for (var token of deviceTokens.docs) {
+        tokens.push(token.data().deviceToken);
     }
 
     var payload = {
