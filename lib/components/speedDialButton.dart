@@ -1,11 +1,12 @@
 import 'package:alphagarage/components/addContactDialog.dart';
+import 'package:alphagarage/screens/userMessages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SpeedDialButton{
 
-  showButton(context){
+  showAdminSpeedDial(context){
     return SpeedDial(
       marginRight: 18,
       marginBottom: 20,
@@ -18,8 +19,7 @@ class SpeedDialButton{
       overlayOpacity: 1,
       //onOpen: () => print('OPENING DIAL'),
       //onClose: () => print('DIAL CLOSED'),
-      tooltip: 'Speed Dial',
-      heroTag: 'speed-dial-hero-tag',
+      tooltip: 'Press to Add user or Sign out',
       backgroundColor: Colors.brown,
       foregroundColor: Colors.white,
       elevation: 10.0,
@@ -47,7 +47,7 @@ class SpeedDialButton{
     );
   }
 
-  logOutButtonOnly(){
+  showUserSpeedDial(){
     return SpeedDial(
       marginRight: 18,
       marginBottom: 20,
@@ -60,8 +60,7 @@ class SpeedDialButton{
       overlayOpacity: 1,
       //onOpen: () => print('OPENING DIAL'),
       //onClose: () => print('DIAL CLOSED'),
-      tooltip: 'Speed Dial',
-      heroTag: 'speed-dial-hero-tag',
+      tooltip: 'Press to Refresh or Sign out',
       backgroundColor: Colors.brown,
       foregroundColor: Colors.white,
       elevation: 10.0,
@@ -74,6 +73,16 @@ class SpeedDialButton{
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
             // TODO Add Sign out functionality
+          },
+        ),
+        SpeedDialChild(
+          child: Icon(Icons.sync),
+          backgroundColor: Colors.green,
+          label: 'Refresh',
+          labelStyle: TextStyle(fontSize: 18.0),
+          onTap: () {
+            // TODO function to be implemented
+           // UserMessages().refresh();
           },
         ),
       ],

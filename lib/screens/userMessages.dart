@@ -6,12 +6,21 @@ import 'package:flutter/material.dart';
 
 class UserMessages extends StatefulWidget {
   static const String id = 'user_messages_screen';
+
   @override
   _UserMessagesState createState() => _UserMessagesState();
 }
 
 class _UserMessagesState extends State<UserMessages> {
   final _firestore = Firestore.instance;
+
+  refresh(){
+    setState(() {
+      // TODO Add refresh functionality
+      // How to make this function and call this from the Speed Dial class
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +64,7 @@ class _UserMessagesState extends State<UserMessages> {
           },
         ),
       ),
-      floatingActionButton: SpeedDialButton().logOutButtonOnly(),
+      floatingActionButton: SpeedDialButton().showUserSpeedDial(),
     );
   }
 }
@@ -95,7 +104,7 @@ class AnnouncementBubble extends StatelessWidget {
                 child: Text(
                   messageText != null ? messageText : '',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 16.5,
                     color: Colors.white,
                   ),
                 ),
