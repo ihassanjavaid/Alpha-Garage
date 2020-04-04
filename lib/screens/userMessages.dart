@@ -104,7 +104,7 @@ class _UserMessagesState extends State<UserMessages> {
       ),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection('messages').snapshots(),
+          stream: _firestore.collection('messages').orderBy('timestamp', descending: true).snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(

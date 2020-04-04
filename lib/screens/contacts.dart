@@ -83,7 +83,9 @@ class ListItemWidget extends State<SwipeList> {
                       padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
                       child: CircularProfileAvatar(
                         "",
-                        backgroundColor: Colors.grey,
+                        backgroundColor: friendsDataList[index].isAdmin
+                            ? Colors.brown
+                            : Colors.grey,
                         initialsText: Text(
                           friendsDataList != null
                               ? friendsDataList[index].displayName[0]
@@ -118,6 +120,9 @@ class ListItemWidget extends State<SwipeList> {
                               fontSize: 22,
                               fontStyle: FontStyle.italic,
                               color: Colors.brown,
+                                fontWeight: friendsDataList[index].isAdmin
+                                    ? FontWeight.bold
+                                    : FontWeight.normal
                             ),
                           ),
                           Padding(
@@ -126,18 +131,18 @@ class ListItemWidget extends State<SwipeList> {
                               width: 58,
                               decoration: BoxDecoration(
                                   color: friendsDataList[index].isAdmin
-                                      ? Colors.lightBlue
-                                      : Colors.green,
+                                      ? Colors.brown
+                                      : Colors.grey,
                                   border: Border.all(
                                       color: friendsDataList[index].isAdmin
-                                          ? Colors.lightBlue
-                                          : Colors.green),
+                                          ? Colors.brown
+                                          : Colors.grey),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
                               child: Text(
                                 friendsDataList[index].isAdmin
                                     ? 'Admin'
-                                    : 'Worker',
+                                    : 'User',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 14),
