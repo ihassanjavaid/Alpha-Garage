@@ -84,7 +84,7 @@ class _UserMessagesState extends State<UserMessages> {
           },
         ),
       ),
-      floatingActionButton: SpeedDialButton().showUserSpeedDial(),
+      floatingActionButton: SpeedDialButton().showUserSpeedDial(context),
     );
   }
 }
