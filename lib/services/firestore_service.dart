@@ -29,6 +29,7 @@ class FirestoreService {
 
   postToken() async {
     final deviceToken = await getDeviceToken();
+    final currentUser = await _auth.currentUser();
 
     final tokens = await _firestore.collection('deviceTokens').getDocuments();
 
@@ -39,7 +40,8 @@ class FirestoreService {
     DocumentReference documentReference =
         _firestore.collection('deviceTokens').document();
 
-    await documentReference.setData({'deviceToken': deviceToken});
+    await documentReference
+        .setData({'deviceToken': deviceToken, 'email': currentUser.email});
   }
 
   Future<void> registerUser({
