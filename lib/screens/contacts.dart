@@ -290,7 +290,7 @@ class ListItemWidget extends State<SwipeList> {
 
 /*  void _acquireUserData() async {
     final data = await _firestoreService.getCurrentUserData();
-    setState(() {
+      setState(() {
       userData = data;
     });
   }*/

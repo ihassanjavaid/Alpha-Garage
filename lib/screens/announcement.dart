@@ -1,8 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/services/firestore_service.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'dart:io';
+
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
@@ -16,6 +21,31 @@ class _AnnouncementState extends State<Announcement> {
   String announcementText;
   final messageTitleController = TextEditingController();
   final messageTextController = TextEditingController();
+  File _image;
+
+  bool imageAttain= false;
+
+  Future<void> getImage() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+
+      print('Image path $_image');
+
+    });
+
+
+  }
+
+  Future<void> uploadImage(BuildContext context) async{
+
+    String fileName=basename(_image.path);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+
+   // StorageReference reference = FirebaseStorage.instance.ref().child(path)
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +132,12 @@ class _AnnouncementState extends State<Announcement> {
                                   ),
                                 ],
                               ),
-                              onPressed: () {
-                                // TODO add functonality
+                              onPressed: () async {
+                                   await getImage();
+
+                                //Navigator.push(context, MaterialPageRoute(builder: (context)=> uploadScreen(),));
+
+
                               },
                             ),
                           ),
@@ -141,11 +175,15 @@ class _AnnouncementState extends State<Announcement> {
                       onPressed: () async {
                         // Post announcement
                         try {
+                          if(_image!=null){
+                            await uploadImage(context);
+                          }
                           await FirestoreService().postMessage(
                               messageTitle: this.announcementTitle,
                               messageText: this.announcementText,
                               messageType: MessageType.announcement);
                           messageTextController.clear();
+                          _image = null;
                         } catch (e) {
                           print(e);
                         }
@@ -161,3 +199,15 @@ class _AnnouncementState extends State<Announcement> {
     );
   }
 }
+
+class uploadScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Card(
+
+      ),
+    );
+  }
+}
+
