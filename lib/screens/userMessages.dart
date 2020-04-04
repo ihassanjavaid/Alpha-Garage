@@ -1,3 +1,4 @@
+import 'package:alphagarage/components/speedDialButton.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,6 +55,7 @@ class _UserMessagesState extends State<UserMessages> {
           },
         ),
       ),
+      floatingActionButton: SpeedDialButton().logOutButtonOnly(),
     );
   }
 }
@@ -67,7 +69,7 @@ class AnnouncementBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -75,16 +77,16 @@ class AnnouncementBubble extends StatelessWidget {
             messageTitle != null ? messageTitle : '',
             style: TextStyle(
                 fontSize: 24.0,
-                color: Colors.black54,
+                color: Colors.brown,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.0),
             child: Material(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(8.5),
               elevation: 5.0,
-              color: Colors.lightBlueAccent,
+              color: Colors.grey,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,
@@ -101,7 +103,7 @@ class AnnouncementBubble extends StatelessWidget {
             ),
           ),
           Divider(
-            thickness: 2.0,
+            thickness: 3.0,
           ),
         ],
       ),
