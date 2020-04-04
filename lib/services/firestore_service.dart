@@ -34,7 +34,8 @@ class FirestoreService {
     final tokens = await _firestore.collection('deviceTokens').getDocuments();
 
     for (var token in tokens.documents) {
-      if (deviceToken == token['deviceToken']) return;
+      if (deviceToken == token['deviceToken'] &&
+          currentUser.email == token['email']) return;
     }
 
     DocumentReference documentReference =

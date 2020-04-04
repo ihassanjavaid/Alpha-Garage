@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'index.dart';
 
 enum AuthMode { LOGIN, SIGNUP }
@@ -33,6 +34,7 @@ class _LoginState extends State<Login> {
   String password;
   String displayName;
 
+  bool _showSpinner = false;
   Auth _auth = Auth();
   FirestoreService _firestoreService = FirestoreService();
 
@@ -62,17 +64,20 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            lowerHalf(context),
-            upperHalf(context),
-            _authMode == AuthMode.LOGIN
-                ? loginCard(context)
-                : signUpCard(context),
-            pageTitle(),
-          ],
+    return ModalProgressHUD(
+      inAsyncCall: _showSpinner,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              lowerHalf(context),
+              upperHalf(context),
+              _authMode == AuthMode.LOGIN
+                  ? loginCard(context)
+                  : signUpCard(context),
+              pageTitle(),
+            ],
+          ),
         ),
       ),
     );
@@ -168,6 +173,9 @@ class _LoginState extends State<Login> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () async {
+                          setState(() {
+                            _showSpinner = true;
+                          });
                           try {
                             await _auth.loginUserWithEmailAndPassword(
                                 email: removeSpaces(this.email),
@@ -183,6 +191,9 @@ class _LoginState extends State<Login> {
                                 .show();
                             print(e);
                           }
+                          setState(() {
+                            _showSpinner = false;
+                          });
                         },
                       )
                     ],
@@ -314,6 +325,9 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           onPressed: () async {
+                            setState(() {
+                              _showSpinner = true;
+                            });
                             try {
                               final fixedEmail = removeSpaces(this.email);
                               await _auth.registerUser(
@@ -336,6 +350,9 @@ class _LoginState extends State<Login> {
                                   .show();
                               print(e);
                             }
+                            setState(() {
+                              _showSpinner = false;
+                            });
                           },
                         ),
                       ),
