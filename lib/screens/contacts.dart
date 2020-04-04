@@ -30,7 +30,7 @@ class Contacts extends StatelessWidget {
       body: Center(
         child: SwipeList(),
       ),
-      floatingActionButton: SpeedDialButton().showButton(context),
+      floatingActionButton: SpeedDialButton().showAdminSpeedDial(context),
     );
   }
 }
