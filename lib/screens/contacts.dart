@@ -31,7 +31,7 @@ class Contacts extends StatelessWidget {
         child: SwipeList(),
       ),
       floatingActionButton: SpeedDialButton().showButton(context),
-      );
+    );
   }
 }
 
@@ -44,8 +44,6 @@ class SwipeList extends StatefulWidget {
 
 class ListItemWidget extends State<SwipeList> {
   List<UserData> friendsDataList;
-  //UserData userData;
-  //final FirestoreService _firestoreService = FirestoreService();
 
   @override
   void initState() {
@@ -63,30 +61,6 @@ class ListItemWidget extends State<SwipeList> {
       friendsDataList = tempHolder;
     });
   }
-
-  /*void getFriends() async {
-    String reducedPhoneNum;
-    //List<Contact> contacts = await ContactsClass.getContacts();
-
-    for (var contact in contacts) {
-      contact.phones.forEach((phoneNum) async {
-        reducedPhoneNum = phoneNum.value.replaceAll(" ", "");
-        reducedPhoneNum = reducedPhoneNum.replaceAll("-", "");
-
-        final QuerySnapshot query =
-        await _firestoreService.getUserDocuments(reducedPhoneNum);
-
-        for (var document in query.documents) {
-          setState(() {
-            this.friendsDataList.add(document.data);
-          });
-        }
-        print('Total friends:');
-        print(this.friendsDataList.length);
-      });
-    }
-  }
-*/
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +80,7 @@ class ListItemWidget extends State<SwipeList> {
               height: 90.0,
               child: Row(
                 children: <Widget>[
-                   Container(
+                  Container(
                     height: 70.0,
                     width: 70.0,
                     child: Padding(

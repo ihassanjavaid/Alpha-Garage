@@ -14,20 +14,23 @@ class CustomTextField extends StatelessWidget {
   final bool isPassword;
   final ValueChanged<String> onChanged;
   final TextInputType keyboardType;
+  final TextEditingController controller;
 
   final int minLines;
   final int maxLines;
 
-  CustomTextField(
-      {@required this.placeholder,
-        this.cursorColor = Colors.brown,
-        this.placeholderColor = Colors.brown,
-        this.focusedOutlineBorder = Colors.brown,
-        this.onChanged,
-        this.isPassword = false,
-        this.keyboardType,
-        this.minLines = 1, this.maxLines = 1
-      });
+  CustomTextField({
+    @required this.placeholder,
+    this.cursorColor = Colors.brown,
+    this.placeholderColor = Colors.brown,
+    this.focusedOutlineBorder = Colors.brown,
+    this.onChanged,
+    this.isPassword = false,
+    this.keyboardType,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
       onChanged: this.onChanged,
+      controller: this.controller,
     );
   }
 }

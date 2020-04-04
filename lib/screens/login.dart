@@ -1,12 +1,12 @@
 import 'package:alphagarage/components/alertComponent.dart';
 import 'package:alphagarage/components/customTextField.dart';
+import 'package:alphagarage/screens/userMessages.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'index.dart';
 
 enum AuthMode { LOGIN, SIGNUP }
@@ -34,6 +34,22 @@ class _LoginState extends State<Login> {
   Auth _auth = Auth();
 
   String removeSpaces(String email) => email.replaceAll(' ', '');
+
+  Future<void> _decideRoute() async {
+    final currentUser = await _auth.getCurrentUser();
+    final currentUserData =
+        await FirestoreService().getUserData(currentUser.email);
+
+    if (currentUserData.isAdmin) {
+      Navigator.pushReplacementNamed(context, Index.id);
+      /*Navigator.pop(context);
+      Navigator.pushNamed(context, Index.id);*/
+    } else {
+      Navigator.pushReplacementNamed(context, UserMessages.id);
+      /*Navigator.pop(context);
+      Navigator.pushNamed(context, UserMessages.id);*/
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +165,7 @@ class _LoginState extends State<Login> {
                             await _auth.loginUserWithEmailAndPassword(
                                 email: removeSpaces(this.email),
                                 password: this.password);
-                            Navigator.popAndPushNamed(context, Index.id);
+                            await _decideRoute();
                           } catch (e) {
                             AlertComponent()
                                 .generateAlert(
@@ -303,9 +319,9 @@ class _LoginState extends State<Login> {
                             } catch (e) {
                               AlertComponent()
                                   .generateAlert(
-                                  context: context,
-                                  title: "Error",
-                                  description: e)
+                                      context: context,
+                                      title: "Error",
+                                      description: e)
                                   .show();
                               print(e);
                             }

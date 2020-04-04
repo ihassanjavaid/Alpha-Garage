@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:alphagarage/components/customTextField.dart';
+import 'package:alphagarage/services/firestore_service.dart';
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
@@ -11,6 +12,11 @@ class Announcement extends StatefulWidget {
 }
 
 class _AnnouncementState extends State<Announcement> {
+  String announcementTitle;
+  String announcementText;
+  final messageTitleController = TextEditingController();
+  final messageTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +60,10 @@ class _AnnouncementState extends State<Announcement> {
                           padding: const EdgeInsets.all(8.0),
                           child: CustomTextField(
                             placeholder: 'Title',
+                            controller: this.messageTitleController,
+                            onChanged: (value) {
+                              this.announcementTitle = value;
+                            },
                           ),
                         ),
                         Padding(
@@ -62,6 +72,10 @@ class _AnnouncementState extends State<Announcement> {
                             placeholder: 'Make an Announcement',
                             minLines: 8,
                             maxLines: null,
+                            controller: this.messageTextController,
+                            onChanged: (value) {
+                              this.announcementText = value;
+                            },
                           ),
                         ),
                         Padding(
@@ -124,7 +138,18 @@ class _AnnouncementState extends State<Announcement> {
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        // Post announcement
+                        try {
+                          await FirestoreService().postMessage(
+                              messageTitle: this.announcementTitle,
+                              messageText: this.announcementText,
+                              messageType: MessageType.announcement);
+                          messageTextController.clear();
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
                     ),
                   ),
                 ),

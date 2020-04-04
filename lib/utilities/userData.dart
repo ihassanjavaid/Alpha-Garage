@@ -1,6 +1,7 @@
 class UserData {
-  UserData({this.email, this.displayName});
+  UserData({this.email, this.displayName, this.isAdmin = false});
 
-  String displayName;
-  String email;
+  final String displayName;
+  final String email;
+  final bool isAdmin;
 }
