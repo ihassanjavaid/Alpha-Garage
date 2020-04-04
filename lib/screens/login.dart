@@ -315,7 +315,8 @@ class _LoginState extends State<Login> {
                               await FirestoreService().registerUser(
                                   email: removeSpaces(this.email),
                                   displayName: this.displayName);
-                              Navigator.popAndPushNamed(context, Index.id);
+                              Navigator.pushReplacementNamed(
+                                  context, UserMessages.id);
                             } catch (e) {
                               AlertComponent()
                                   .generateAlert(

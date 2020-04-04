@@ -63,10 +63,12 @@ class _UserMessagesState extends State<UserMessages> {
             final messages = snapshot.data.documents;
             List<AnnouncementBubble> messageBubbles = [];
             for (var message in messages) {
+              bool isPrivate = false;
               final messageTitle = message.data['messageTitle'];
               final messageText = message.data['messageText'];
               final messageType = message.data['messageType'];
               if (messageType == 'privateMessage') {
+                isPrivate = true;
                 try {
                   if (currentUser.email != message['receiverEmail']) continue;
                 } catch (_) {}
@@ -74,6 +76,7 @@ class _UserMessagesState extends State<UserMessages> {
               final messageWidget = AnnouncementBubble(
                 messageTitle: messageTitle,
                 messageText: messageText,
+                isPrivate: isPrivate,
               );
               messageBubbles.add(messageWidget);
             }
@@ -115,7 +118,13 @@ class AnnouncementBubble extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: 20.0),
             child: Material(
-              borderRadius: BorderRadius.circular(8.5),
+              borderRadius: BorderRadius.only(
+                bottomLeft:
+                    isPrivate ? Radius.circular(0) : Radius.circular(18.5),
+                bottomRight: Radius.circular(18.5),
+                topLeft: Radius.circular(18.5),
+                topRight: Radius.circular(18.5),
+              ),
               elevation: 5.0,
               color: !isPrivate ? Colors.grey : Colors.redAccent,
               child: Padding(
@@ -131,6 +140,14 @@ class AnnouncementBubble extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          ),
+          Text(
+            isPrivate ? 'Private Message' : '',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.black54,
             ),
           ),
           Divider(

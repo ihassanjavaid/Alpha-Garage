@@ -19,7 +19,6 @@ Future<void> checkInternConnection() async {
 class FirestoreService {
   final _firestore = Firestore();
   final _auth = FirebaseAuth.instance;
-  final _connectivityService = Connectivity();
 
   Future<void> registerUser({
     String displayName,
@@ -93,7 +92,7 @@ class FirestoreService {
       'messageType': messageType == MessageType.announcement
           ? 'announcement'
           : 'privateMessage',
-      'recieverEmail': receiverEmail
+      'receiverEmail': receiverEmail
     }, merge: true);
   }
 }
