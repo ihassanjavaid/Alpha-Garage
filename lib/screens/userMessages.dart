@@ -15,7 +15,7 @@ class UserMessages extends StatefulWidget {
 class _UserMessagesState extends State<UserMessages> {
   final _firestore = Firestore.instance;
 
-  refresh(){
+  refresh() {
     setState(() {
       // TODO Add refresh functionality
       // How to make this function and call this from the Speed Dial class
