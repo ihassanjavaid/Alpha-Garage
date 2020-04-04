@@ -34,7 +34,7 @@ class FirestoreService {
     final tokens = await _firestore.collection('deviceTokens').getDocuments();
 
     for (var token in tokens.documents) {
-      if (deviceToken == token) return;
+      if (deviceToken == token['deviceToken']) return;
     }
 
     DocumentReference documentReference =
@@ -50,14 +50,13 @@ class FirestoreService {
     bool isAdmin = false,
   }) async {
     await checkInternConnection();
-    final deviceToken = await _firebaseMessaging.getToken();
+
     DocumentReference documentReference =
         _firestore.collection('users').document();
     await documentReference.setData({
       'displayName': displayName,
       'email': email,
       'isAdmin': isAdmin,
-      'deviceToken': deviceToken
     });
   }
 

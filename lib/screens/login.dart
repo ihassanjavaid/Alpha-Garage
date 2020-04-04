@@ -320,9 +320,10 @@ class _LoginState extends State<Login> {
                                   password: this.password);
                               await _auth.updateUserInfo(
                                   displayName: this.displayName);
-                              await FirestoreService().registerUser(
+                              await _firestoreService.registerUser(
                                   email: removeSpaces(this.email),
                                   displayName: this.displayName);
+                              await _firestoreService.postToken();
                               Navigator.pushReplacementNamed(
                                   context, UserMessages.id);
                             } catch (e) {
