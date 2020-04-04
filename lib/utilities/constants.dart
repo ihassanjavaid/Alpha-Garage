@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const kButtonContainerColour = 0xFFc4c4c4;
 const kDefaultBackgroundColour = 0xfff8f8f8;
@@ -56,21 +57,33 @@ const TextStyle kOptionStyle =
 TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
 const Icon kAnnouceIcon = Icon(
+  FontAwesomeIcons.bullhorn,
+  size: 30,
+  color: Colors.grey,
+);
+
+const Icon kAnnouceIconActive = Icon(
+  FontAwesomeIcons.bullhorn,
+  size: 30,
+  color: Colors.brown ,
+);
+
+const Icon kUserMessagesIcon = Icon(
   Icons.comment,
   size: 30,
   color: Colors.grey,
+);
+
+const Icon kUserMessagesIconActive = Icon(
+  Icons.comment,
+  size: 30,
+  color: Colors.brown ,
 );
 
 const Icon kPeopleIcon = Icon(
   Icons.people,
   size: 30,
   color: Colors.grey,
-);
-
-const Icon kAnnouceIconActive = Icon(
-  Icons.comment,
-  size: 30,
-  color: Colors.brown ,
 );
 
 const Icon kPeopleIconActive = Icon(

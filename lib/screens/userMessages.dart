@@ -64,14 +64,13 @@ class _UserMessagesState extends State<UserMessages> {
       setState(() {
         Alert(
           context: context,
-          type: AlertType.success,
           title: title,
           desc: mMessage,
           buttons: [
             DialogButton(
-              color: Colors.redAccent,
+              color: Colors.brown,
               child: Text(
-                "Ok",
+                "Done!",
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               onPressed: () => Navigator.pop(context),
@@ -179,7 +178,7 @@ class AnnouncementBubble extends StatelessWidget {
                 topRight: Radius.circular(18.5),
               ),
               elevation: 5.0,
-              color: !isPrivate ? Colors.grey : Colors.redAccent,
+              color: !isPrivate ? Colors.grey : Colors.red,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 10.0,
