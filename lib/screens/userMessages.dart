@@ -1,5 +1,6 @@
 import 'package:alphagarage/components/speedDialButton.dart';
 import 'package:alphagarage/services/auth_service.dart';
+import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,8 +26,17 @@ class _UserMessagesState extends State<UserMessages> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
-    _configureFirebaseListeners();
+    setNotifications();
+  }
+
+  setNotifications() async {
+    final currentUser = await Auth().getCurrentUser();
+    final currentUserData =
+        await FirestoreService().getUserData(currentUser.email);
+    if (!currentUserData.isAdmin) {
+      getCurrentUser();
+      _configureFirebaseListeners();
+    }
   }
 
   void getCurrentUser() async {
