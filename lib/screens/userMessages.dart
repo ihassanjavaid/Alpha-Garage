@@ -18,7 +18,8 @@ class _UserMessagesState extends State<UserMessages> {
   final _firestore = Firestore.instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   List<NotificationData> _notifications = [];
-
+  NotificationData lastNotification;
+  NotificationData n;
   FirebaseUser currentUser;
 
   @override
@@ -55,12 +56,13 @@ class _UserMessagesState extends State<UserMessages> {
     final String title = notification['title'];
     final String body = notification['body'];
     final String mMessage = data['message'];
+
     setState(() {
-      NotificationData n =
-          NotificationData(title: title, body: body, message: mMessage);
+      n = NotificationData(title: title, body: body, message: mMessage);
       _notifications.add(n);
     });
-    if (alert) {
+    if (alert && this.lastNotification != n) {
+      this.lastNotification = n;
       setState(() {
         Alert(
           context: context,
@@ -103,7 +105,10 @@ class _UserMessagesState extends State<UserMessages> {
       ),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection('messages').orderBy('timestamp', descending: true).snapshots(),
+          stream: _firestore
+              .collection('messages')
+              .orderBy('timestamp', descending: true)
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(
@@ -119,6 +124,7 @@ class _UserMessagesState extends State<UserMessages> {
               final messageTitle = message.data['messageTitle'];
               final messageText = message.data['messageText'];
               final messageType = message.data['messageType'];
+              final imageReference = message.data['imageReference'];
               if (messageType == 'privateMessage') {
                 isPrivate = true;
                 try {
@@ -129,6 +135,7 @@ class _UserMessagesState extends State<UserMessages> {
                 messageTitle: messageTitle,
                 messageText: messageText,
                 isPrivate: isPrivate,
+                imageReference: imageReference,
               );
               messageBubbles.add(messageWidget);
             }
@@ -146,11 +153,118 @@ class _UserMessagesState extends State<UserMessages> {
 
 class AnnouncementBubble extends StatelessWidget {
   AnnouncementBubble(
-      {this.messageText, this.messageTitle, this.isPrivate = false});
+      {this.messageText,
+      this.messageTitle,
+      this.isPrivate = false,
+      this.imageReference = ''});
 
   final String messageText;
   final String messageTitle;
   final bool isPrivate;
+  final String imageReference;
+
+  getWidgets() {
+    if (imageReference != null) {
+      return <Widget>[
+        Text(
+          messageTitle != null ? messageTitle : '',
+          style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.brown,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 20.0),
+          child: Material(
+            borderRadius: BorderRadius.only(
+              bottomLeft:
+                  isPrivate ? Radius.circular(0) : Radius.circular(18.5),
+              bottomRight: Radius.circular(18.5),
+              topLeft: Radius.circular(18.5),
+              topRight: Radius.circular(18.5),
+            ),
+            elevation: 5.0,
+            color: !isPrivate ? Colors.grey : Colors.red,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 20.0,
+              ),
+              child: Text(
+                messageText != null ? messageText : '',
+                style: TextStyle(
+                  fontSize: 16.5,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Text(
+          isPrivate ? 'Private Message' : '',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 12.0,
+            color: Colors.black54,
+          ),
+        ),
+        Container(
+          child: Image.network(imageReference),
+        ),
+        Divider(
+          thickness: 3.0,
+        ),
+      ];
+    }
+    return <Widget>[
+      Text(
+        messageTitle != null ? messageTitle : '',
+        style: TextStyle(
+            fontSize: 24.0,
+            color: Colors.brown,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic),
+      ),
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 20.0),
+        child: Material(
+          borderRadius: BorderRadius.only(
+            bottomLeft: isPrivate ? Radius.circular(0) : Radius.circular(18.5),
+            bottomRight: Radius.circular(18.5),
+            topLeft: Radius.circular(18.5),
+            topRight: Radius.circular(18.5),
+          ),
+          elevation: 5.0,
+          color: !isPrivate ? Colors.grey : Colors.red,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 20.0,
+            ),
+            child: Text(
+              messageText != null ? messageText : '',
+              style: TextStyle(
+                fontSize: 16.5,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+      Text(
+        isPrivate ? 'Private Message' : '',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 12.0,
+          color: Colors.black54,
+        ),
+      ),
+      Divider(
+        thickness: 3.0,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,54 +272,7 @@ class AnnouncementBubble extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            messageTitle != null ? messageTitle : '',
-            style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.brown,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 20.0),
-            child: Material(
-              borderRadius: BorderRadius.only(
-                bottomLeft:
-                    isPrivate ? Radius.circular(0) : Radius.circular(18.5),
-                bottomRight: Radius.circular(18.5),
-                topLeft: Radius.circular(18.5),
-                topRight: Radius.circular(18.5),
-              ),
-              elevation: 5.0,
-              color: !isPrivate ? Colors.grey : Colors.red,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  messageText != null ? messageText : '',
-                  style: TextStyle(
-                    fontSize: 16.5,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Text(
-            isPrivate ? 'Private Message' : '',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.black54,
-            ),
-          ),
-          Divider(
-            thickness: 3.0,
-          ),
-        ],
+        children: getWidgets(),
       ),
     );
   }

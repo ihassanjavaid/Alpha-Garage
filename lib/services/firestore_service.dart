@@ -110,6 +110,7 @@ class FirestoreService {
       {String messageTitle,
       String messageText,
       String receiverEmail,
+      String imageReference,
       MessageType messageType}) async {
     await checkInternConnection();
 
@@ -117,6 +118,7 @@ class FirestoreService {
         _firestore.collection('messages').document();
 
     await documentReference.setData({
+      'imageReference': imageReference,
       'messageTitle': messageTitle,
       'messageText': messageText,
       'messageType': messageType == MessageType.announcement

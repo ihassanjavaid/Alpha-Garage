@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 
+import 'package:permission_handler/permission_handler.dart';
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
@@ -22,29 +23,30 @@ class _AnnouncementState extends State<Announcement> {
   final messageTitleController = TextEditingController();
   final messageTextController = TextEditingController();
   File _image;
+  StorageReference _firebaseStorageRef;
 
-  bool imageAttain= false;
+  bool imageAttain = false;
 
-  Future<void> getImage() async{
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
+  Future<void> getImage() async {
+    final status = await Permission.photos.request();
 
-      print('Image path $_image');
+    if (status == PermissionStatus.granted) {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _image = image;
 
-    });
-
-
+        print('Image path $_image');
+      });
+    }
   }
 
-  Future<void> uploadImage(BuildContext context) async{
-
-    String fileName=basename(_image.path);
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+  Future<void> uploadImage(BuildContext context) async {
+    String fileName = basename(_image.path);
+    _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+    StorageUploadTask uploadTask = _firebaseStorageRef.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
 
-   // StorageReference reference = FirebaseStorage.instance.ref().child(path)
+    // StorageReference reference = FirebaseStorage.instance.ref().child(path)
   }
 
   @override
@@ -133,11 +135,9 @@ class _AnnouncementState extends State<Announcement> {
                                 ],
                               ),
                               onPressed: () async {
-                                   await getImage();
+                                await getImage();
 
                                 //Navigator.push(context, MaterialPageRoute(builder: (context)=> uploadScreen(),));
-
-
                               },
                             ),
                           ),
@@ -175,16 +175,23 @@ class _AnnouncementState extends State<Announcement> {
                       onPressed: () async {
                         // Post announcement
                         try {
-                          if(_image!=null){
+                          var imageReference;
+                          if (_image != null) {
                             await uploadImage(context);
+                            imageReference =
+                                await _firebaseStorageRef.getDownloadURL();
                           }
+
                           await FirestoreService().postMessage(
-                              messageTitle: this.announcementTitle,
-                              messageText: this.announcementText,
-                              messageType: MessageType.announcement);
+                            messageTitle: this.announcementTitle,
+                            messageText: this.announcementText,
+                            messageType: MessageType.announcement,
+                            imageReference: imageReference,
+                          );
                           messageTextController.clear();
                           messageTitleController.clear();
                           _image = null;
+                          _firebaseStorageRef = null;
                         } catch (e) {
                           print(e);
                         }
@@ -205,10 +212,7 @@ class uploadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Card(
-
-      ),
+      child: Card(),
     );
   }
 }
-

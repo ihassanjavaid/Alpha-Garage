@@ -67,6 +67,13 @@ class ListItemWidget extends State<SwipeList> {
       child: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.teal,
+              ),
+            );
+          }
           final users = snapshot.data.documents;
           List<UserData> userList = [];
           for (var user in users) {
