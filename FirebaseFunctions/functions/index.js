@@ -11,15 +11,22 @@ exports.notificationTrigger = functions.firestore.document('messages/{messageId}
         return;
     }
 
-    newData = snapshot.data;
+    newData = snapshot.data();
 
-    var tokens = [
-        'cBWf6VujWFQ:APA91bGys4eRXhW3iZQB0b97oaj-gZzC-kHalgPNGEPtqXKUCnISzJBjP7CIodChipiQmgWPup_z6gy7k_Z0tEJxZTZ-y3SEgpIe6TtOoF8TZBiKncCF6eJ0peWzZ-AsaUa7qWvnCSio'
-    ];
+    var tokens = []; 
+
+    const users = await admin.firestore().collection('users').get();
+
+    for (var user of users.docs) {
+        const deviceTokens = await admin.firestore().collection('users').document(user.data().id).collection('deviceTokens').get();
+        for (var token of deviceTokens.docs) {
+            tokens.push(token.data().device_token);
+        }
+    }
 
     var payload = {
         notification : {title: 'Push Title', body: 'Push body', sound: 'default'},
-        data: {click_action: 'FLUTTER_NOTIFICATION_CLICK' , message: 'Push notification message'}
+        data: {click_action: 'FLUTTER_NOTIFICATION_CLICK' , message: newData.message}
     };
 
     try {
