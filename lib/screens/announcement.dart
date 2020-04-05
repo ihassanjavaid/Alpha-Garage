@@ -133,19 +133,24 @@ class _AnnouncementState extends State<Announcement> {
                                   minWidth: double.infinity,
                                   height: 50,
                                   child: RaisedButton(
-                                    color: Colors.grey,
+                                    color: _image != null ?
+                                    Colors.blueAccent : Colors.grey,
                                     elevation: 2,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         Icon(
+                                          _image != null ?
+                                          Icons.done_all :
                                           Icons.satellite,
                                           color: Colors.white,
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: Text(
-                                            'Upload a picture',
+                                            _image != null ?
+                                                'Image Uploaded' :
+                                            'Upload an Image',
                                             style: TextStyle(color: Colors.white),
                                           ),
                                         ),
