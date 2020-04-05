@@ -31,5 +31,4 @@ class Alfa extends StatelessWidget {
   }
 }
 
-// TODO make everything flexible and expanded
 // TODO fix the Android app Icon through ImageAsset
