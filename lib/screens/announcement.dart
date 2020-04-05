@@ -73,16 +73,24 @@ class _AnnouncementState extends State<Announcement> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: <Widget>[
-                          AutoSizeText(
-                            'Make an\nAnnouncement',
-                            style: kAnnounceTextStyle,
+                          Flexible(
+                            flex: 4,
+                            child: AutoSizeText(
+                              'Make an\nAnnouncement',
+                              maxLines: 3,
+                              overflow: TextOverflow.clip,
+                              style: kAnnounceTextStyle,
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
-                            child: Icon(
-                              Icons.comment,
-                              color: Colors.grey,
-                              size: 52,
+                          Flexible(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
+                              child: Icon(
+                                Icons.comment,
+                                color: Colors.grey,
+                                size: 52,
+                              ),
                             ),
                           ),
                         ],
