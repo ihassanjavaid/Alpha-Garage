@@ -218,6 +218,9 @@ class _AnnouncementState extends State<Announcement> {
                               messageTitleController.clear();
                               _image = null;
                               _firebaseStorageRef = null;
+                              setState(() {
+                                _image = null;
+                              });
                               AlertComponent().announcementMade(context).show();
                             } catch (e) {
                               print(e);
