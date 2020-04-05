@@ -11,6 +11,7 @@ import 'package:path/path.dart';
 import 'dart:io';
 
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
@@ -141,25 +142,28 @@ class _AnnouncementState extends State<Announcement> {
                                   minWidth: double.infinity,
                                   height: 50,
                                   child: RaisedButton(
-                                    color: _image != null ?
-                                    Colors.blueAccent : Colors.grey,
+                                    color: _image != null
+                                        ? Colors.blueAccent
+                                        : Colors.grey,
                                     elevation: 2,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Icon(
-                                          _image != null ?
-                                          Icons.done_all :
-                                          Icons.satellite,
+                                          _image != null
+                                              ? Icons.done_all
+                                              : Icons.satellite,
                                           color: Colors.white,
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: Text(
-                                            _image != null ?
-                                                'Image Uploaded' :
-                                            'Upload an Image',
-                                            style: TextStyle(color: Colors.white),
+                                            _image != null
+                                                ? 'Image Uploaded'
+                                                : 'Upload an Image',
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                         ),
                                       ],
@@ -206,7 +210,10 @@ class _AnnouncementState extends State<Announcement> {
                             ],
                           ),
                           onPressed: () async {
-                            _showSpinner = true;
+                            setState(() {
+                              _showSpinner = true;
+                            });
+
                             // Post announcement
                             try {
                               var imageReference;
@@ -233,7 +240,9 @@ class _AnnouncementState extends State<Announcement> {
                             } catch (e) {
                               print(e);
                             }
-                            _showSpinner = false;
+                            setState(() {
+                              _showSpinner = false;
+                            });
                           },
                         ),
                       ),
