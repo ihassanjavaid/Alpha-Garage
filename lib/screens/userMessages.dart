@@ -6,6 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -196,18 +197,36 @@ class AnnouncementBubble extends StatelessWidget {
             ),
             elevation: 5.0,
             color: !isPrivate ? Colors.grey : Colors.red,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 20.0,
-              ),
-              child: Text(
-                messageText != null ? messageText : '',
-                style: TextStyle(
-                  fontSize: 16.5,
-                  color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 20.0,
+                  ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      messageText != null ? messageText : '',
+                      style: TextStyle(
+                        fontSize: 16.5,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                  child: ClipRRect(
+                      child: Image.network(imageReference),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18.5),
+                      bottomRight: Radius.circular(18.5),
+                      topLeft: Radius.circular(2.5),
+                      topRight: Radius.circular(2.5),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -218,9 +237,6 @@ class AnnouncementBubble extends StatelessWidget {
             fontSize: 12.0,
             color: Colors.black54,
           ),
-        ),
-        Container(
-          child: Image.network(imageReference),
         ),
         Divider(
           thickness: 3.0,
