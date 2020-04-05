@@ -77,7 +77,7 @@ class _AnnouncementState extends State<Announcement> {
                             flex: 4,
                             child: AutoSizeText(
                               'Make an\nAnnouncement',
-                              maxLines: 3,
+                              maxLines: 2,
                               overflow: TextOverflow.clip,
                               style: kAnnounceTextStyle,
                             ),
