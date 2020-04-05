@@ -131,54 +131,66 @@ class ListItemWidget extends State<SwipeList> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  AutoSizeText(
-                                    userList != null
-                                        ? userList[index].displayName
-                                        : 'Anonymous User',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.brown,
-                                        fontWeight: userList[index].isAdmin
-                                            ? FontWeight.bold
-                                            : FontWeight.normal),
+                                  Expanded(
+                                    flex: 1,
+                                    child: AutoSizeText(
+                                      userList != null
+                                          ? userList[index].displayName
+                                          : 'Anonymous User',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.brown,
+                                          fontWeight: userList[index].isAdmin
+                                              ? FontWeight.bold
+                                              : FontWeight.normal),
+                                    ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
-                                    child: Container(
-                                      width: 58,
-                                      decoration: BoxDecoration(
-                                          color: userList[index].isAdmin
-                                              ? Colors.brown
-                                              : Colors.grey,
-                                          border: Border.all(
-                                              color: userList[index].isAdmin
-                                                  ? Colors.brown
-                                                  : Colors.grey),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Text(
-                                        userList[index].isAdmin
-                                            ? 'Admin'
-                                            : 'User',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 14),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                                      child: Container(
+                                        width: 58,
+                                        decoration: BoxDecoration(
+                                            color: userList[index].isAdmin
+                                                ? Colors.brown
+                                                : Colors.grey,
+                                            border: Border.all(
+                                                color: userList[index].isAdmin
+                                                    ? Colors.brown
+                                                    : Colors.grey),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            userList[index].isAdmin
+                                                ? 'Admin'
+                                                : 'User',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 14),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
-                                    child: Container(
-                                      width: 260,
-                                      child: Text(
-                                        "Tap to message",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.grey,
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                                      child: Container(
+                                        width: 260,
+                                        child: Text(
+                                          "Tap to message",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
                                     ),
