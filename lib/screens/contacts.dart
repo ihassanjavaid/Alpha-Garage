@@ -23,7 +23,7 @@ class Contacts extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         title: AutoSizeText(
-          'People',
+          'Le Utenza',
           overflow: TextOverflow.clip,
           maxLines: 1,
           style: kAppBarTextStyle,
@@ -153,7 +153,9 @@ class ListItemWidget extends State<SwipeList> {
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                                       child: Container(
-                                        width: 58,
+                                        width: userList[index].isAdmin
+                                            ? 110
+                                            : 76,
                                         decoration: BoxDecoration(
                                             color: userList[index].isAdmin
                                                 ? Colors.brown
@@ -168,8 +170,8 @@ class ListItemWidget extends State<SwipeList> {
                                           alignment: Alignment.center,
                                           child: Text(
                                             userList[index].isAdmin
-                                                ? 'Admin'
-                                                : 'User',
+                                                ? 'Amministratore'
+                                                : 'Le Utenza',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white, fontSize: 14),
@@ -185,7 +187,7 @@ class ListItemWidget extends State<SwipeList> {
                                       child: Container(
                                         width: 260,
                                         child: Text(
-                                          "Tap to message",
+                                          "Tocca il messaggio",
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontStyle: FontStyle.italic,

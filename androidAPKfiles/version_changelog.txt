@@ -1,2 +1,2 @@
-v1.0.0: pending delivery
+v1.0.0: pending delivery => Delivered
 v1.0.2: shared prefs / auto-login

@@ -33,7 +33,7 @@ class _IndexState extends State<Index> {
           BottomNavigationBarItem(
             icon: kAnnouceIcon,
             title: Text(
-              'Announcement',
+              'Annuncio',
               style: kBottomNavTextStyle,
             ),
             activeIcon: kAnnouceIconActive,
@@ -41,7 +41,7 @@ class _IndexState extends State<Index> {
           BottomNavigationBarItem(
             icon: kUserMessagesIcon,
             title: Text(
-              'Messages',
+              'Messaggi',
               style: kBottomNavTextStyle,
             ),
             activeIcon: kUserMessagesIconActive,
@@ -49,7 +49,7 @@ class _IndexState extends State<Index> {
           BottomNavigationBarItem(
             icon: kPeopleIcon,
             title: Text(
-              'People',
+              'Le Utenza',
               style: kBottomNavTextStyle,
             ),
             activeIcon: kPeopleIconActive,

@@ -77,7 +77,7 @@ class _AnnouncementState extends State<Announcement> {
                           Flexible(
                             flex: 4,
                             child: AutoSizeText(
-                              'Make an\nAnnouncement',
+                              'Fare un\nannuncio',
                               maxLines: 2,
                               overflow: TextOverflow.clip,
                               style: kAnnounceTextStyle,
@@ -111,7 +111,7 @@ class _AnnouncementState extends State<Announcement> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomTextField(
-                                  placeholder: 'Title',
+                                  placeholder: 'Titolo',
                                   controller: this.messageTitleController,
                                   onChanged: (value) {
                                     this.announcementTitle = value;
@@ -124,7 +124,7 @@ class _AnnouncementState extends State<Announcement> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomTextField(
-                                  placeholder: 'Make an Announcement',
+                                  placeholder: 'Fare un annuncio',
                                   minLines: 8,
                                   maxLines: null,
                                   controller: this.messageTextController,
@@ -160,8 +160,8 @@ class _AnnouncementState extends State<Announcement> {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Text(
                                             _image != null
-                                                ? 'Image Uploaded'
-                                                : 'Upload an Image',
+                                                ? 'Foto Caricata'
+                                                : 'Caricare una Foto',
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -203,7 +203,7 @@ class _AnnouncementState extends State<Announcement> {
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  'Announce!',
+                                  'Annunciare!',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),

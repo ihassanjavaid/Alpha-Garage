@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Login",
+                      "Accesso",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> {
                     height: 20,
                   ),
                   CustomTextField(
-                    placeholder: "Password",
+                    placeholder: "Parola d'ordine",
                     isPassword: true,
                     onChanged: (value) {
                       this.password = value;
@@ -160,13 +160,13 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       MaterialButton(
                         onPressed: () {},
-                        child: Text("Forgot Password ?"),
+                        child: Text("Ha dimenticato"),
                       ),
                       Expanded(
                         child: Container(),
                       ),
                       FlatButton(
-                        child: Text("Login"),
+                        child: Text("Accesso"),
                         color: Colors.brown,
                         textColor: Colors.white,
                         padding: EdgeInsets.only(
@@ -216,7 +216,7 @@ class _LoginState extends State<Login> {
               height: 40,
             ),
             Text(
-              "Don't have an account ?",
+              "Non ho un account?",
               style: TextStyle(color: Colors.grey),
             ),
             FlatButton(
@@ -226,7 +226,7 @@ class _LoginState extends State<Login> {
                 });
               },
               textColor: Colors.black87,
-              child: Text("Create Account"),
+              child: Text("Creare un Profilo"),
             ),
           ],
         ),
@@ -237,7 +237,7 @@ class _LoginState extends State<Login> {
             width: double.maxFinite,
             child: SignInButton(
               Buttons.Facebook,
-              text: 'Sign in with Facebook',
+              text: 'Accedi con Facebook',
               onPressed: () {
                 // TODO implement Facebook Login
               },
@@ -267,7 +267,7 @@ class _LoginState extends State<Login> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Create Account",
+                      "Creare un Profilo",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,
@@ -279,7 +279,7 @@ class _LoginState extends State<Login> {
                     height: 15,
                   ),
                   CustomTextField(
-                    placeholder: 'Your Name',
+                    placeholder: 'Il tuo nome',
                     onChanged: (value) {
                       this.displayName = value;
                     },
@@ -288,7 +288,7 @@ class _LoginState extends State<Login> {
                     height: 15,
                   ),
                   CustomTextField(
-                    placeholder: 'Your Email',
+                    placeholder: 'la tua email',
                     onChanged: (value) {
                       this.email = value;
                     },
@@ -297,7 +297,7 @@ class _LoginState extends State<Login> {
                     height: 20,
                   ),
                   CustomTextField(
-                    placeholder: 'Your Password',
+                    placeholder: 'la tua password',
                     isPassword: true,
                     onChanged: (value) {
                       this.password = value;
@@ -307,7 +307,7 @@ class _LoginState extends State<Login> {
                     height: 20,
                   ),
                   Text(
-                    "Password must be at least 8 characters and include a special character and number",
+                    "La password deve contenere almeno 8 caratteri e includere un carattere e un numero speciali",
                     style: TextStyle(color: Colors.grey),
                   ),
                   SizedBox(
@@ -322,7 +322,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
                         child: FlatButton(
-                          child: Text("Sign Up"),
+                          child: Text("Iscriviti"),
                           color: Colors.brown,
                           textColor: Colors.white,
                           padding: EdgeInsets.only(
@@ -350,7 +350,7 @@ class _LoginState extends State<Login> {
                               AlertComponent()
                                   .generateAlert(
                                       context: context,
-                                      title: "Error",
+                                      title: "Errore",
                                       description: e)
                                   .show();
                               print(e);
@@ -376,7 +376,7 @@ class _LoginState extends State<Login> {
               height: 40,
             ),
             Text(
-              "Already have an account?",
+              "Hai già un account?",
               style: TextStyle(color: Colors.grey),
             ),
             FlatButton(
@@ -386,7 +386,7 @@ class _LoginState extends State<Login> {
                 });
               },
               textColor: Colors.black87,
-              child: Text("Login"),
+              child: Text("Accesso"),
             )
           ],
         ),
@@ -394,7 +394,7 @@ class _LoginState extends State<Login> {
           alignment: Alignment.bottomCenter,
           child: FlatButton(
             child: Text(
-              "Terms & Conditions",
+              "Termini & Condizioni",
               style: TextStyle(
                 color: Colors.grey,
               ),

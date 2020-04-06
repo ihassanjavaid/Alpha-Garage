@@ -28,7 +28,7 @@ class SpeedDialButton {
         SpeedDialChild(
           child: Icon(FontAwesomeIcons.doorOpen),
           backgroundColor: Colors.red,
-          label: 'Sign out',
+          label: 'Disconnessione',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () async {
             await Auth().signOut();
@@ -38,7 +38,7 @@ class SpeedDialButton {
         SpeedDialChild(
           child: Icon(Icons.person_add),
           backgroundColor: Colors.green,
-          label: 'Add User',
+          label: 'Aggiungi Utente',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
             showDialog(
@@ -72,7 +72,7 @@ class SpeedDialButton {
         SpeedDialChild(
           child: Icon(FontAwesomeIcons.doorOpen),
           backgroundColor: Colors.red,
-          label: 'Sign out',
+          label: 'Disconnessione',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () async {
             await Auth().signOut();
@@ -82,7 +82,7 @@ class SpeedDialButton {
         SpeedDialChild(
           child: Icon(Icons.sync),
           backgroundColor: Colors.green,
-          label: 'Refresh',
+          label: 'Ricaricare',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
             // TODO function to be implemented
