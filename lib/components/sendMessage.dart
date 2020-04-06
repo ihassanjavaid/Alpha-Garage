@@ -46,7 +46,7 @@ class MessageDialog {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: AutoSizeText(
-                    'Send\nMessage',
+                    'Invia\nMessaggio',
                     style: kAnnounceTextStyle.copyWith(fontSize: 38),
                   ),
                 ),
@@ -54,7 +54,7 @@ class MessageDialog {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomTextField(
-                  placeholder: 'Title',
+                  placeholder: 'Titolo',
                   controller: this.messageTitleController,
                   onChanged: (value) {
                     messageTitle = value;
@@ -64,7 +64,7 @@ class MessageDialog {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomTextField(
-                  placeholder: 'Write Message',
+                  placeholder: 'Scrivi un messaggio',
                   minLines: 8,
                   maxLines: null,
                   controller: this.messageTextController,
@@ -91,7 +91,7 @@ class MessageDialog {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            'Upload a picture',
+                            'Carica una foto',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -123,7 +123,7 @@ class MessageDialog {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
-                            'Send!',
+                            'Spedire!',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

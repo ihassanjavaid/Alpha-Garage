@@ -1,6 +1,7 @@
 import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/screens/login.dart';
@@ -44,44 +45,52 @@ class _AddContactState extends State<AddContact> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-                          child: Text(
-                            "Add User",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
+                        Flexible(
+                          flex: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                            child: AutoSizeText(
+                              "Aggiungi utente",
+                              maxLines: 2,
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
-                          child: DropdownButton<String>(
-                            value: this.dropdownButtonValue,
-                            icon: Icon(Icons.people, color: Colors.brown),
-                            iconSize: 24,
-                            elevation: 16,
-                            style: TextStyle(color: Colors.brown, fontSize: 24),
-                            underline: SizedBox(
-                              width: double.maxFinite,
-                              child: Container(
-                                height: 2,
-                                color: Colors.brown,
+                        Flexible(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
+                            child: DropdownButton<String>(
+                              value: this.dropdownButtonValue,
+                              icon: Icon(Icons.people, color: Colors.brown),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: TextStyle(color: Colors.brown, fontSize: 24),
+                              underline: SizedBox(
+                                width: double.maxFinite,
+                                child: Container(
+                                  height: 2,
+                                  color: Colors.brown,
+                                ),
                               ),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  this.dropdownButtonValue = newValue;
+                                });
+                              },
+                              items: <String>['User', 'Admin']
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
-                            onChanged: (String newValue) {
-                              setState(() {
-                                this.dropdownButtonValue = newValue;
-                              });
-                            },
-                            items: <String>['User', 'Admin']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
                           ),
                         ),
                       ],
@@ -93,7 +102,7 @@ class _AddContactState extends State<AddContact> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: CustomTextField(
-                      placeholder: 'Name',
+                      placeholder: 'Nome',
                       onChanged: (value) {
                         this.displayName = value;
                       },
@@ -117,7 +126,7 @@ class _AddContactState extends State<AddContact> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: CustomTextField(
-                      placeholder: 'Password',
+                      placeholder: "Parola d'ordine",
                       isPassword: true,
                       onChanged: (value) {
                         this.password = value;
@@ -130,7 +139,7 @@ class _AddContactState extends State<AddContact> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Text(
-                      "Password must be at least 8 characters and include a special character and number",
+                      "La password deve essere di almeno 8 caratteri",
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -144,7 +153,7 @@ class _AddContactState extends State<AddContact> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Add User",
+                            "Aggiungi utente",
                             style: TextStyle(
                               fontSize: 17,
                             ),
