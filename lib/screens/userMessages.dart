@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class UserMessages extends StatefulWidget {
@@ -176,7 +175,7 @@ class AnnouncementBubble extends StatelessWidget {
   final bool isPrivate;
   final String imageReference;
 
-  getWidgets() {
+  getWidgets(context) {
     if (imageReference != null) {
       return <Widget>[
         Text(
@@ -217,21 +216,34 @@ class AnnouncementBubble extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  child: ClipRRect(
-                      child: GestureDetector(
-                          child: Image.network(imageReference),
-                        onTap: () {
-                            Get.to(ImageView());
-                        },
+                GestureDetector(
+                  child: Container(
+                    child: ClipRRect(
+                        child: Image.network(imageReference),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(18.5),
+                        bottomRight: Radius.circular(18.5),
+                        topLeft: Radius.circular(2.5),
+                        topRight: Radius.circular(2.5),
                       ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(18.5),
-                      bottomRight: Radius.circular(18.5),
-                      topLeft: Radius.circular(2.5),
-                      topRight: Radius.circular(2.5),
                     ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (value) =>
+                            ImageView(imageReference),
+                        ),
+                    );
+                   /* Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (c, a1, a2) => ImageView(imageReference),
+                        transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                        transitionDuration: Duration(milliseconds: 2000),
+                      ),
+                    );*/
+                  },
                 ),
               ],
             ),
@@ -305,7 +317,7 @@ class AnnouncementBubble extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: getWidgets(),
+        children: getWidgets(context),
       ),
     );
   }
