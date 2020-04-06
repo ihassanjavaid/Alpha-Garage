@@ -1,4 +1,5 @@
 import 'package:alphagarage/components/speedDialButton.dart';
+import 'package:alphagarage/screens/imageViewer.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class UserMessages extends StatefulWidget {
@@ -217,7 +219,12 @@ class AnnouncementBubble extends StatelessWidget {
                 ),
                 Container(
                   child: ClipRRect(
-                      child: Image.network(imageReference),
+                      child: GestureDetector(
+                          child: Image.network(imageReference),
+                        onTap: () {
+                            Get.to(ImageView());
+                        },
+                      ),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(18.5),
                       bottomRight: Radius.circular(18.5),
