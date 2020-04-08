@@ -8,7 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/userData.dart';
 
 class Contacts extends StatelessWidget {
@@ -90,8 +89,13 @@ class ListItemWidget extends State<SwipeList> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    MessageDialog(receiverEmail: userList[index].email)
-                        .announce(context);
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SendMessageDialog();
+                        });
+//                    MessageDialog(receiverEmail: userList[index].email)
+//                        .announce(context);
                   },
                   child: Card(
                     elevation: 10,
@@ -153,9 +157,8 @@ class ListItemWidget extends State<SwipeList> {
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                                       child: Container(
-                                        width: userList[index].isAdmin
-                                            ? 110
-                                            : 76,
+                                        width:
+                                            userList[index].isAdmin ? 110 : 76,
                                         decoration: BoxDecoration(
                                             color: userList[index].isAdmin
                                                 ? Colors.brown
@@ -174,7 +177,8 @@ class ListItemWidget extends State<SwipeList> {
                                                 : 'Le Utenza',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                color: Colors.white, fontSize: 14),
+                                                color: Colors.white,
+                                                fontSize: 14),
                                           ),
                                         ),
                                       ),

@@ -9,9 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path/path.dart';
 import 'dart:io';
-
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Announcement extends StatefulWidget {
   static const String id = 'announcement_screen';
@@ -47,7 +45,7 @@ class _AnnouncementState extends State<Announcement> {
     String fileName = basename(_image.path);
     _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
     StorageUploadTask uploadTask = _firebaseStorageRef.putFile(_image);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    await uploadTask.onComplete;
 
     // StorageReference reference = FirebaseStorage.instance.ref().child(path)
   }
@@ -59,7 +57,7 @@ class _AnnouncementState extends State<Announcement> {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               height: double.infinity,
@@ -69,28 +67,82 @@ class _AnnouncementState extends State<Announcement> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Flexible(
-                    flex: 2,
+                    child: ListTile(
+                      title: AutoSizeText(
+                        'Fare un\nannuncio',
+                        maxLines: 2,
+                        overflow: TextOverflow.clip,
+                        style: kAnnounceTextStyle,
+                      ),
+                      trailing: Icon(
+                        Icons.comment,
+                        color: Colors.grey,
+                        size: 52,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 8,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
                         children: <Widget>[
-                          Flexible(
-                            flex: 4,
-                            child: AutoSizeText(
-                              'Fare un\nannuncio',
-                              maxLines: 2,
-                              overflow: TextOverflow.clip,
-                              style: kAnnounceTextStyle,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomTextField(
+                              placeholder: 'Titolo',
+                              controller: this.messageTitleController,
+                              onChanged: (value) {
+                                this.announcementTitle = value;
+                              },
                             ),
                           ),
-                          Flexible(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
-                              child: Icon(
-                                Icons.comment,
-                                color: Colors.grey,
-                                size: 52,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomTextField(
+                              placeholder: 'Fare un annuncio',
+                              minLines: 8,
+                              maxLines: null,
+                              controller: this.messageTextController,
+                              onChanged: (value) {
+                                this.announcementText = value;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ButtonTheme(
+                              minWidth: double.infinity,
+                              height: 50,
+                              child: RaisedButton(
+                                color: _image != null
+                                    ? Colors.blueAccent
+                                    : Colors.grey,
+                                elevation: 2,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      _image != null
+                                          ? Icons.done_all
+                                          : Icons.satellite,
+                                      color: Colors.white,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Text(
+                                        _image != null
+                                            ? 'Foto Caricata'
+                                            : 'Caricare una Foto',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onPressed: () async {
+                                  await getImage();
+                                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> uploadScreen(),));
+                                },
                               ),
                             ),
                           ),
@@ -98,153 +150,67 @@ class _AnnouncementState extends State<Announcement> {
                       ),
                     ),
                   ),
-                  Flexible(
-                    flex: 4,
-                    child: Card(
-                      elevation: 8,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(3, 0, 3, 0),
+                    child: ButtonTheme(
+                      minWidth: double.maxFinite,
+                      height: 50,
+                      child: RaisedButton(
+                        focusColor: Colors.brown,
+                        autofocus: true,
+                        color: Colors.brown,
+                        elevation: 10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomTextField(
-                                  placeholder: 'Titolo',
-                                  controller: this.messageTitleController,
-                                  onChanged: (value) {
-                                    this.announcementTitle = value;
-                                  },
-                                ),
-                              ),
+                            Icon(
+                              Icons.comment,
+                              color: Colors.white,
                             ),
-                            Flexible(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomTextField(
-                                  placeholder: 'Fare un annuncio',
-                                  minLines: 8,
-                                  maxLines: null,
-                                  controller: this.messageTextController,
-                                  onChanged: (value) {
-                                    this.announcementText = value;
-                                  },
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ButtonTheme(
-                                  minWidth: double.infinity,
-                                  height: 50,
-                                  child: RaisedButton(
-                                    color: _image != null
-                                        ? Colors.blueAccent
-                                        : Colors.grey,
-                                    elevation: 2,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          _image != null
-                                              ? Icons.done_all
-                                              : Icons.satellite,
-                                          color: Colors.white,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text(
-                                            _image != null
-                                                ? 'Foto Caricata'
-                                                : 'Caricare una Foto',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    onPressed: () async {
-                                      await getImage();
-                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=> uploadScreen(),));
-                                    },
-                                  ),
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                'Annunciare!',
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
-                      child: ButtonTheme(
-                        minWidth: double.maxFinite,
-                        height: 50,
-                        child: RaisedButton(
-                          focusColor: Colors.brown,
-                          autofocus: true,
-                          color: Colors.brown,
-                          elevation: 10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.comment,
-                                color: Colors.white,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Annunciare!',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () async {
-                            setState(() {
-                              _showSpinner = true;
-                            });
+                        onPressed: () async {
+                          setState(() {
+                            _showSpinner = true;
+                          });
 
-                            // Post announcement
-                            try {
-                              var imageReference;
-                              if (_image != null) {
-                                await uploadImage(context);
-                                imageReference =
-                                    await _firebaseStorageRef.getDownloadURL();
-                              }
-
-                              await FirestoreService().postMessage(
-                                messageTitle: this.announcementTitle,
-                                messageText: this.announcementText,
-                                messageType: MessageType.announcement,
-                                imageReference: imageReference,
-                              );
-                              messageTextController.clear();
-                              messageTitleController.clear();
-                              _image = null;
-                              _firebaseStorageRef = null;
-                              setState(() {
-                                _image = null;
-                              });
-                              AlertComponent().announcementMade(context).show();
-                            } catch (e) {
-                              print(e);
+                          // Post announcement
+                          try {
+                            var imageReference;
+                            if (_image != null) {
+                              await uploadImage(context);
+                              imageReference =
+                                  await _firebaseStorageRef.getDownloadURL();
                             }
+
+                            await FirestoreService().postMessage(
+                              messageTitle: this.announcementTitle,
+                              messageText: this.announcementText,
+                              messageType: MessageType.announcement,
+                              imageReference: imageReference,
+                            );
+                            messageTextController.clear();
+                            messageTitleController.clear();
+                            _image = null;
+                            _firebaseStorageRef = null;
                             setState(() {
-                              _showSpinner = false;
+                              _image = null;
                             });
-                          },
-                        ),
+                            AlertComponent().announcementMade(context).show();
+                          } catch (e) {
+                            print(e);
+                          }
+                          setState(() {
+                            _showSpinner = false;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -254,15 +220,6 @@ class _AnnouncementState extends State<Announcement> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class uploadScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Card(),
     );
   }
 }
