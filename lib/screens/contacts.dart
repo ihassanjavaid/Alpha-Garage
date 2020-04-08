@@ -94,8 +94,6 @@ class ListItemWidget extends State<SwipeList> {
                         builder: (BuildContext context) {
                           return SendMessageDialog();
                         });
-//                    MessageDialog(receiverEmail: userList[index].email)
-//                        .announce(context);
                   },
                   child: Card(
                     elevation: 10,
@@ -128,7 +126,6 @@ class ListItemWidget extends State<SwipeList> {
                             ),
                           ),
                           Container(
-//width: double.infinity,
                             height: 100,
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
@@ -218,114 +215,3 @@ class ListItemWidget extends State<SwipeList> {
     );
   }
 }
-
-/*
-ListView.builder(
-itemCount: userList != null ? userList.length : 0,
-itemBuilder: (context, index) {
-return GestureDetector(
-onTap: () {
-MessageDialog(receiverEmail: userList[index].email)
-    .announce(context);
-},
-child: Card(
-elevation: 10,
-child: Container(
-height: 90.0,
-child: Row(
-children: <Widget>[
-Container(
-height: 70.0,
-width: 70.0,
-child: Padding(
-padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-child: CircularProfileAvatar(
-"",
-backgroundColor: userList[index].isAdmin
-? Colors.brown
-    : Colors.grey,
-initialsText: Text(
-userList != null
-? userList[index].displayName[0]
-    : 'A',
-style: TextStyle(
-fontSize: 42,
-color: Colors.white,
-fontStyle: FontStyle.italic,
-),
-),
-elevation: 10.0,
-),
-),
-),
-Container(
-//width: double.infinity,
-height: 100,
-child: Padding(
-padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
-child: Column(
-crossAxisAlignment: CrossAxisAlignment.start,
-children: <Widget>[
-AutoSizeText(
-userList != null
-? userList[index].displayName
-    : 'Anonymous User',
-maxLines: 1,
-overflow: TextOverflow.clip,
-style: TextStyle(
-fontSize: 22,
-fontStyle: FontStyle.italic,
-color: Colors.brown,
-fontWeight: userList[index].isAdmin
-? FontWeight.bold
-    : FontWeight.normal),
-),
-Padding(
-padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
-child: Container(
-width: 58,
-decoration: BoxDecoration(
-color: userList[index].isAdmin
-? Colors.brown
-    : Colors.grey,
-border: Border.all(
-color: userList[index].isAdmin
-? Colors.brown
-    : Colors.grey),
-borderRadius:
-BorderRadius.all(Radius.circular(10))),
-child: Text(
-userList[index].isAdmin
-? 'Admin'
-    : 'User',
-textAlign: TextAlign.center,
-style: TextStyle(
-color: Colors.white, fontSize: 14),
-),
-),
-),
-Padding(
-padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
-child: Container(
-width: 260,
-child: Text(
-"Tap to message",
-style: TextStyle(
-fontSize: 15,
-fontStyle: FontStyle.italic,
-color: Colors.grey,
-),
-),
-),
-)
-],
-),
-),
-)
-],
-),
-),
-),
-);
-},
-))*/
