@@ -154,8 +154,7 @@ class ListItemWidget extends State<SwipeList> {
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                                       child: Container(
-                                        width:
-                                            userList[index].isAdmin ? 110 : 76,
+                                        width: userList[index].isAdmin ? 68 : 58,
                                         decoration: BoxDecoration(
                                             color: userList[index].isAdmin
                                                 ? Colors.brown
