@@ -1,10 +1,14 @@
-import 'package:alphagarage/components/alertComponent.dart';
 import 'package:alphagarage/components/customTextField.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MessageDialog {
   MessageDialog({this.receiverEmail});
@@ -13,8 +17,25 @@ class MessageDialog {
   final FirestoreService _firestoreService = FirestoreService();
   final messageTitleController = TextEditingController();
   final messageTextController = TextEditingController();
-
+  File _image;
   bool _showSpinner = false;
+  StorageReference _firebaseStorageRef;
+
+  Future<void> getImage() async {
+    final status = await Permission.photos.request();
+
+    if (status == PermissionStatus.granted) {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      _image = image;
+    }
+  }
+
+  Future<void> uploadImage(BuildContext context) async {
+    String fileName = basename(_image.path);
+    _firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+    StorageUploadTask uploadTask = _firebaseStorageRef.putFile(_image);
+    await uploadTask.onComplete;
+  }
 
   announce(context) {
     showDialog(
@@ -24,12 +45,12 @@ class MessageDialog {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            child: _announcementCard(),
+            child: _announcementCard(context),
           );
         });
   }
 
-  _announcementCard() {
+  _announcementCard(context) {
     String messageTitle;
     String messageText;
 
@@ -97,8 +118,8 @@ class MessageDialog {
                         ),
                       ],
                     ),
-                    onPressed: () {
-                      // TODO add functonality
+                    onPressed: () async {
+                      await getImage();
                     },
                   ),
                 ),
@@ -133,10 +154,17 @@ class MessageDialog {
                       _showSpinner = true;
                       // Push the message to the contact
                       try {
+                        var imageReference;
+                        if (_image != null) {
+                          await uploadImage(context);
+                          imageReference =
+                              await _firebaseStorageRef.getDownloadURL();
+                        }
                         await _firestoreService.postMessage(
                             messageTitle: messageTitle,
                             messageText: messageText,
                             receiverEmail: this.receiverEmail,
+                            imageReference: imageReference,
                             messageType: MessageType.privateMessage);
                         this.messageTitleController.clear();
                         this.messageTextController.clear();

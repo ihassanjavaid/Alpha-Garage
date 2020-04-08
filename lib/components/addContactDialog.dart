@@ -70,7 +70,8 @@ class _AddContactState extends State<AddContact> {
                               icon: Icon(Icons.people, color: Colors.brown),
                               iconSize: 24,
                               elevation: 16,
-                              style: TextStyle(color: Colors.brown, fontSize: 24),
+                              style:
+                                  TextStyle(color: Colors.brown, fontSize: 24),
                               underline: SizedBox(
                                 width: double.maxFinite,
                                 child: Container(
@@ -83,8 +84,10 @@ class _AddContactState extends State<AddContact> {
                                   this.dropdownButtonValue = newValue;
                                 });
                               },
-                              items: <String>['User', 'Admin']
-                                  .map<DropdownMenuItem<String>>((String value) {
+                              items: <String>[
+                                'User',
+                                'Admin'
+                              ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
