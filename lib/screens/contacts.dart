@@ -173,8 +173,8 @@ class ListItemWidget extends State<SwipeList> {
                                           alignment: Alignment.center,
                                           child: Text(
                                             userList[index].isAdmin
-                                                ? 'Amministratore'
-                                                : 'Le Utenza',
+                                                ? 'Admin'
+                                                : 'Utene',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
@@ -191,7 +191,7 @@ class ListItemWidget extends State<SwipeList> {
                                       child: Container(
                                         width: 260,
                                         child: Text(
-                                          "Tocca il messaggio",
+                                          "Clicca per messaggiare",
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontStyle: FontStyle.italic,

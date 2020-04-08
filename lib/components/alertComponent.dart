@@ -13,7 +13,7 @@ class AlertComponent{
         DialogButton(
           color: Colors.brown,
           child: Text(
-            "Try Again!",
+            "Riprova!",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
           onPressed: () {
@@ -29,13 +29,13 @@ class AlertComponent{
     return Alert(
       context: context,
       type: AlertType.success,
-      title: 'Announced!',
-      desc: 'Announcement has been made',
+      title: 'Annunciato!',
+      desc: 'è stato fatto un annuncio',
       buttons: [
         DialogButton(
           color: Colors.brown,
           child: Text(
-            "Done!",
+            "Fatto!",
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
           onPressed: () {

@@ -69,7 +69,7 @@ class _AnnouncementState extends State<Announcement> {
                   Flexible(
                     child: ListTile(
                       title: AutoSizeText(
-                        'Fare un\nannuncio',
+                        'Condividi la lavorazione',
                         maxLines: 2,
                         overflow: TextOverflow.clip,
                         style: kAnnounceTextStyle,
@@ -100,7 +100,7 @@ class _AnnouncementState extends State<Announcement> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CustomTextField(
-                              placeholder: 'Fare un annuncio',
+                              placeholder: 'Condividi la lavorazione',
                               minLines: 8,
                               maxLines: null,
                               controller: this.messageTextController,
@@ -133,7 +133,7 @@ class _AnnouncementState extends State<Announcement> {
                                       child: Text(
                                         _image != null
                                             ? 'Foto Caricata'
-                                            : 'Caricare una Foto',
+                                            : 'Carica l’immagine',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -170,7 +170,7 @@ class _AnnouncementState extends State<Announcement> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                'Annunciare!',
+                                'Pubblica!',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
