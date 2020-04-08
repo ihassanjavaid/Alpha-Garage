@@ -74,7 +74,7 @@ class _LoginState extends State<Login> {
 
   Widget pageTitle() {
     return Container(
-      margin: EdgeInsets.only(top: 50),
+      margin: EdgeInsets.only(top: 100),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +87,7 @@ class _LoginState extends State<Login> {
           Text(
             "  Alfa's Garage",
             style: TextStyle(
-                fontSize: 40, color: Colors.white, fontWeight: FontWeight.w400),
+                fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ],
       ),
