@@ -221,10 +221,11 @@ class AnnouncementBubble extends StatelessWidget {
                     child: ClipRRect(
                         child: Image.network(imageReference),
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(18.5),
+                        bottomLeft:
+                        isPrivate ? Radius.circular(0) : Radius.circular(18.5),
                         bottomRight: Radius.circular(18.5),
-                        topLeft: Radius.circular(2.5),
-                        topRight: Radius.circular(2.5),
+                        topLeft: Radius.circular(18.5),
+                        topRight: Radius.circular(18.5),
                       ),
                     ),
                   ),
