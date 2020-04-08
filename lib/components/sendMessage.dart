@@ -189,7 +189,6 @@ class _SendMessageDialogState extends State<SendMessageDialog> {
                       setState(() {
                         _showSpinner = false;
                       });
-
                     },
                   ),
                 ),
