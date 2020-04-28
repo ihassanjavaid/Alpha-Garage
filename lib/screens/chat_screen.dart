@@ -1,3 +1,5 @@
+import 'package:alphagarage/utilities/constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/models/message_model.dart';
 import 'package:alphagarage/models/user_model.dart';
@@ -28,15 +30,15 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
       width: MediaQuery.of(context).size.width * 0.75,
       decoration: BoxDecoration(
-        color: isMe ? Theme.of(context).accentColor : Color(0xFFFFEFEE),
+        color: isMe ? Colors.brown : Color(0xFFFFEFEE),
         borderRadius: isMe
             ? BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                bottomLeft: Radius.circular(15.0),
+                topLeft: Radius.circular(5.0),
+                bottomLeft: Radius.circular(5.0),
               )
             : BorderRadius.only(
-                topRight: Radius.circular(15.0),
-                bottomRight: Radius.circular(15.0),
+                topRight: Radius.circular(5.0),
+                bottomRight: Radius.circular(5.0),
               ),
       ),
       child: Column(
@@ -45,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Text(
             message.time,
             style: TextStyle(
-              color: Colors.blueGrey,
+              color: isMe ? Colors.grey : Colors.black38,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
             ),
@@ -54,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Text(
             message.text,
             style: TextStyle(
-              color: Colors.blueGrey,
+              color: isMe ? Colors.white : Colors.black54,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
             ),
@@ -68,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Row(
       children: <Widget>[
         msg,
-        IconButton(
+        /*IconButton(
           icon: message.isLiked
               ? Icon(Icons.favorite)
               : Icon(Icons.favorite_border),
@@ -77,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ? Theme.of(context).primaryColor
               : Colors.blueGrey,
           onPressed: () {},
-        )
+        )*/
       ],
     );
   }
@@ -89,12 +91,6 @@ class _ChatScreenState extends State<ChatScreen> {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          IconButton(
-            icon: Icon(Icons.photo),
-            iconSize: 25.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {},
-          ),
           Expanded(
             child: TextField(
               textCapitalization: TextCapitalization.sentences,
@@ -107,7 +103,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
             icon: Icon(Icons.send),
             iconSize: 25.0,
-            color: Theme.of(context).primaryColor,
+            color: Colors.brown,
             onPressed: () {},
           ),
         ],
@@ -118,24 +114,19 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.grey,
       appBar: AppBar(
-        title: Text(
-          widget.user.name,
-          style: TextStyle(
-            fontSize: 28.0,
-            fontWeight: FontWeight.bold,
-          ),
+        iconTheme: IconThemeData(
+          color: Colors.brown,
         ),
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_horiz),
-            iconSize: 30.0,
-            color: Colors.white,
-            onPressed: () {},
-          ),
-        ],
+        backgroundColor: Colors.white,
+        title: AutoSizeText(
+          widget.user.name,
+          overflow: TextOverflow.clip,
+          maxLines: 1,
+          style: kAppBarTextStyle,
+        ),
+        centerTitle: false,
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -146,14 +137,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+               /*     topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),*/
                   ),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                  /*  topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),*/
                   ),
                   child: ListView.builder(
                     reverse: true,
