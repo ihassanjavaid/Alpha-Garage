@@ -80,6 +80,18 @@ const Icon kUserMessagesIconActive = Icon(
   color: Colors.brown ,
 );
 
+const Icon kUserChatIcon = Icon(
+  FontAwesomeIcons.comments,
+  size: 30,
+  color: Colors.grey,
+);
+
+const Icon kUserChatIconActive = Icon(
+  FontAwesomeIcons.comments,
+  size: 30,
+  color: Colors.brown ,
+);
+
 const Icon kPeopleIcon = Icon(
   Icons.people,
   size: 30,

@@ -39,14 +39,18 @@ class _LoginState extends State<Login> {
   FirestoreService _firestoreService = FirestoreService();
 
   Future<void> _decideRoute() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     final currentUser = await _auth.getCurrentUser();
     final currentUserData =
         await _firestoreService.getUserData(currentUser.email);
 
-    if (currentUserData.isAdmin)
+    if (currentUserData.isAdmin) {
+      await pref.setBool('isAdmin', true);
       Navigator.pushReplacementNamed(context, Index.id);
-    else
+    } else {
+      await pref.setBool('isAdmin', false);
       Navigator.pushReplacementNamed(context, UserMessages.id);
+    }
   }
 
   @override
@@ -168,12 +172,12 @@ class _LoginState extends State<Login> {
                           try {
                             final SharedPreferences pref =
                                 await SharedPreferences.getInstance();
-                            await pref.setString(
-                                'email', removeSpaces(this.email));
                             await _auth.loginUserWithEmailAndPassword(
                                 email: removeSpaces(this.email),
                                 password: this.password);
                             await _firestoreService.postToken();
+                            await pref.setString(
+                                'email', removeSpaces(this.email));
                             await _decideRoute();
                           } catch (e) {
                             AlertComponent()
@@ -322,6 +326,8 @@ class _LoginState extends State<Login> {
                               _showSpinner = true;
                             });
                             try {
+                              final SharedPreferences pref =
+                              await SharedPreferences.getInstance();
                               await _auth.registerUser(
                                   email: removeSpaces(this.email),
                                   password: this.password);
@@ -331,6 +337,9 @@ class _LoginState extends State<Login> {
                                   email: removeSpaces(this.email),
                                   displayName: this.displayName);
                               await _firestoreService.postToken();
+                              await pref.setString(
+                                  'email', removeSpaces(this.email));
+                              await pref.setBool('isAdmin', false);
                               Navigator.pushReplacementNamed(
                                   context, UserMessages.id);
                             } catch (e) {

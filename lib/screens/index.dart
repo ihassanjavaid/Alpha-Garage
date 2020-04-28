@@ -47,6 +47,14 @@ class _IndexState extends State<Index> {
             activeIcon: kUserMessagesIconActive,
           ),
           BottomNavigationBarItem(
+            icon: kUserChatIcon,
+            title: Text(
+              'Chiacchierare',
+              style: kBottomNavTextStyle,
+            ),
+            activeIcon: kUserChatIconActive,
+          ),
+          BottomNavigationBarItem(
             icon: kPeopleIcon,
             title: Text(
               'Clienti',

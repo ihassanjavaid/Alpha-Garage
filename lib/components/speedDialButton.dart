@@ -1,5 +1,8 @@
 import 'package:alphagarage/components/addContactDialog.dart';
+import 'package:alphagarage/models/user_model.dart';
+import 'package:alphagarage/screens/chat_screen.dart';
 import 'package:alphagarage/services/auth_service.dart';
+import 'package:alphagarage/widgets/recent_chats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -89,13 +92,12 @@ class SpeedDialButton {
           },
         ),
         SpeedDialChild(
-          child: Icon(Icons.sync),
+          child: Icon(FontAwesomeIcons.comments),
           backgroundColor: Colors.green,
-          label: 'Ricaricare',
+          label: 'Chiacchierare',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
-            // TODO function to be implemented
-            // UserMessages().refresh();
+            Navigator.pushNamed(context, RecentChats.id);
           },
         ),
       ],
