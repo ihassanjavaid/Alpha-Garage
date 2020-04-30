@@ -18,9 +18,11 @@ Future<void> checkInternConnection() async {
 }
 
 class FirestoreService {
-  final _firestore = Firestore();
+  final Firestore _firestore = Firestore();
   final _auth = FirebaseAuth.instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  Firestore get firestore => _firestore;
 
   getDeviceToken() async {
     final deviceToken = await _firebaseMessaging.getToken();
@@ -104,6 +106,30 @@ class FirestoreService {
       }
     }
     return users;
+  }
+
+  getAllAdmins() async {
+    List<UserData> admins = [];
+    List<UserData> users = await getAllUsers();
+    for (var user in users) {
+      if (user.isAdmin) {
+        admins.add(user);
+      }
+    }
+
+    return admins;
+  }
+
+  getNonAdminUsers() async {
+    List<UserData> nonAdminUsers = [];
+    List<UserData> users = await getAllUsers();
+    for (var user in users) {
+      if (!user.isAdmin) {
+        nonAdminUsers.add(user);
+      }
+    }
+
+    return nonAdminUsers;
   }
 
   Future<void> postMessage(
