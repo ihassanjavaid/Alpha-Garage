@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
