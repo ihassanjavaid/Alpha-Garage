@@ -56,20 +56,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               itemBuilder: (BuildContext context, int index) {
                 List<UserData> users = snapshot.data;
                 final UserData user = users[index];
-                return StreamBuilder(
-                    stream: _firestoreService.firestore
-                        .collection('chats')
-                        .snapshots(),
-                    builder: (context, snapshotDoc) {
-                      if (snapshotDoc.hasData) {
-                      final chats = snapshotDoc.data.documents.reversed;
-                      List<Message> _chatMessages = [];
-                      for (var chat in chats) {
-                        Message message = Message.fromMap(chat.data);
-                        _chatMessages.add(message);
-                      }
-                      List userChatMessages = _chatMessages.where((message) => message.messageSender == user.email || message.messageReceiver == user.email ).toList();
-                      return GestureDetector(
+                return  GestureDetector(
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -181,12 +168,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         ),
                       
                       );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    });
               },
             );
           }),

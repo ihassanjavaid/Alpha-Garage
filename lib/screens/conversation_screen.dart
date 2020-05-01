@@ -46,7 +46,7 @@ class ConversationScreen extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirestoreService().firestore
-                        .collection('chats')
+                        .collection('chats').orderBy('timestamp')
                         .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
