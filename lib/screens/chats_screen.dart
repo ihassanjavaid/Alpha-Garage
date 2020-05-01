@@ -85,7 +85,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       ),
                     ),
                   ),
-                  child: Card(
+                  /* child: Card(
                     elevation: 10,
                     margin: EdgeInsets.only(
                         top: 5.0, bottom: 5.0, right: 5.0, left: 5.0),
@@ -132,55 +132,115 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                       // fontWeight: chat.unread ? FontWeight.bold : FontWeight.normal,
                                     ),
                                   ),
-                                  // SizedBox(height: 5.0),
-                                  // Container(
-                                  //   width: MediaQuery.of(context).size.width * 0.45,
-                                  //   child: Text(
-                                  //     chat.text,
-                                  //     style: TextStyle(
-                                  //       color: Colors.black45,
-                                  //       fontSize: 18.0,
-                                  //       fontWeight:  chat.unread ? FontWeight.bold : FontWeight.normal,
-                                  //     ),
-                                  //     overflow: TextOverflow.ellipsis,
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ],
                           ),
-                          // Column(
-                          //   children: <Widget>[
-                          //     Text(
-                          //       chat.time,
-                          //       style: TextStyle(
-                          //         color: Colors.grey,
-                          //         fontSize: 15.0,
-                          //         fontWeight: FontWeight.bold,
-                          //       ),
-                          //     ),
-                          //     SizedBox(height: 5.0),
-                          //     chat.unread
-                          //         ? Container(
-                          //             width: 40.0,
-                          //             height: 20.0,
-                          //             decoration: BoxDecoration(
-                          //               color: Colors.brown,
-                          //               borderRadius: BorderRadius.circular(5.0),
-                          //             ),
-                          //             alignment: Alignment.center,
-                          //             child: Text(
-                          //               'NEW',
-                          //               style: TextStyle(
-                          //                 color: Colors.white,
-                          //                 fontSize: 12.0,
-                          //                 fontWeight: FontWeight.bold,
-                          //               ),
-                          //             ),
-                          //           )
-                          //         : Text(''),
-                          //   ],
-                          // ),
+                        ],
+                      ),
+                    ),
+                  ),*/
+                  child: Card(
+                    elevation: 10,
+                    child: Container(
+                      height: 90.0,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            height: 70.0,
+                            width: 70.0,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                              child: CircularProfileAvatar(
+                                "",
+                                backgroundColor: Colors.grey,
+                                initialsText: Text(
+                                  user.displayName[0].toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 42,
+                                    color: Colors.white,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                                elevation: 10.0,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 100,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 1,
+                                    child: AutoSizeText(
+                                      user.displayName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.brown,
+                                          fontWeight: !_chatMessages[0].isRead
+                                              ? FontWeight.bold
+                                              : FontWeight.normal),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
+                                      child: Container(
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            color: !_chatMessages[0].isRead
+                                                ? Colors.brown
+                                                : Colors.white,
+                                            border: Border.all(
+                                                color: !_chatMessages[0].isRead
+                                                    ? Colors.brown
+                                                    : Colors.grey),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            !_chatMessages[0].isRead
+                                                ? 'New'
+                                                : '',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontStyle: FontStyle.italic),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                                      child: Container(
+                                        width: 260,
+                                        child: Text(
+                                          "Toccare per aprire",
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
