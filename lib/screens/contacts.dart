@@ -123,7 +123,7 @@ class ListItemWidget extends State<SwipeList> {
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
-                                elevation: 10.0,
+                                elevation: 2.0,
                               ),
                             ),
                           ),

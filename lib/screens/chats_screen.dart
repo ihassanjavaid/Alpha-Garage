@@ -120,7 +120,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                                   fontStyle: FontStyle.italic,
                                                 ),
                                               ),
-                                              elevation: 10.0,
+                                              elevation: 2.0,
                                             ),
                                           ),
                                         ),
