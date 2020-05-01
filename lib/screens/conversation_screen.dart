@@ -7,22 +7,18 @@ import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:alphagarage/models/message_model.dart';
 
-class ConversationScreen extends StatefulWidget {
+class ConversationScreen extends StatelessWidget {
   static const String id = "conversation_screen";
   final UserData user;
   final List<Message> chatMessages;
   ConversationScreen({this.user, this.chatMessages});
 
-  @override
-  _ConversationScreenState createState() => _ConversationScreenState();
-}
-
-class _ConversationScreenState extends State<ConversationScreen> {
   final messageTextController = TextEditingController();
-  String _message = '';
+  
 
   @override
   Widget build(BuildContext context) {
+    String _message = '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,7 +27,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         ),
         backgroundColor: Colors.white,
         title: AutoSizeText(
-          widget.user.displayName,
+          this.user.displayName,
           overflow: TextOverflow.clip,
           maxLines: 1,
           style: kAppBarTextStyle,
@@ -49,16 +45,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 child: ListView.builder(
                   reverse: true,
                   itemBuilder: (context, index) {
-                    Message message = widget.chatMessages[index];
+                    Message message = this.chatMessages[index];
                     return MessageBubble(
                       messageText: message.messageText,
                       timestamp:
                           DateTime.fromMillisecondsSinceEpoch(message.timestamp)
                               .toString(),
-                      isMe: message.messageSender != widget.user.email,
+                      isMe: message.messageSender != this.user.email,
                     );
                   },
-                  itemCount: widget.chatMessages.length,
+                  itemCount: this.chatMessages.length,
                 ),
               ),
             ),
@@ -118,7 +114,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       // Create the message
                       Message newMessage = Message(
                         messageSender: currentUser.email,
-                        messageReceiver: widget.user.email,
+                        messageReceiver: this.user.email,
                         messageText: _message,
                         timestamp: DateTime.now().millisecondsSinceEpoch,
                       );
