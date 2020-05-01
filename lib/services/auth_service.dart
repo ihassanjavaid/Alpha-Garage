@@ -4,7 +4,7 @@ import 'package:alphagarage/services/firestore_service.dart';
 class Auth {
   final _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> getCurrentUser() async => await _auth.currentUser();
+  Future<FirebaseUser> get currentUser async => await _auth.currentUser();
 
   Future<void> signOut() async {
     await _auth.signOut();

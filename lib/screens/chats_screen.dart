@@ -6,19 +6,47 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/screens/conversation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:alphagarage/models/message_model.dart';
 
-class ChatsScreen extends StatelessWidget {
+class ChatsScreen extends StatefulWidget {
   static String id = "chats_screen";
 
+  @override
+  _ChatsScreenState createState() => _ChatsScreenState();
+}
+
+class _ChatsScreenState extends State<ChatsScreen> {
+  FirestoreService _firestoreService = FirestoreService();
+  List<Message> _chatMessages = [];
+
+  initState() {
+    super.initState();
+    getChats();
+  }
+
+  getChats() async {
+    await for (var snapshot
+        in _firestoreService.firestore.collection('chats').snapshots()) {
+      for (var chat in snapshot.documents) {
+        Message message = Message.fromMap(chat.data);
+        _chatMessages.add(message);
+      }
+    }
+  }
+
   getItems() async {
-    FirestoreService firestoreService = FirestoreService();
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final bool isAdmin = pref.getBool('isAdmin');
 
-    if (isAdmin) {
-      return await firestoreService.getNonAdminUsers();
-    } else {
-      return await firestoreService.getAllAdmins();
+//    await getChats();
+    try {
+      if (isAdmin) {
+        return await _firestoreService.getNonAdminUsers();
+      } else {
+        return await _firestoreService.getAllAdmins();
+      }
+    } catch (e) {
+      print('Failed to get users\n$e');
     }
   }
 
@@ -37,18 +65,23 @@ class ChatsScreen extends StatelessWidget {
       body: FutureBuilder(
           future: getItems(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return CircularProgressIndicator();
+            if (!snapshot.hasData)
+              return Center(child: CircularProgressIndicator());
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                List<UserData> admins = snapshot.data;
-                final UserData admin = admins[index];
+                List<UserData> users = snapshot.data;
+                final UserData user = users[index];
+                final List<Message> userChatMessages = _chatMessages
+                    .where((element) => element.messageSender == user.email)
+                    .toList();
                 return GestureDetector(
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ConversationScreen(
-                        user: admin,
+                      builder: (context) => ConversationScreen(
+                        user: user,
+                        chatMessages: userChatMessages,
                       ),
                     ),
                   ),
@@ -76,7 +109,7 @@ class ChatsScreen extends StatelessWidget {
                                   "",
                                   backgroundColor: Colors.grey,
                                   initialsText: Text(
-                                    admin.displayName[0],
+                                    user.displayName[0],
                                     style: TextStyle(
                                       fontSize: 40,
                                       color: Colors.white,
@@ -92,7 +125,7 @@ class ChatsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    admin.displayName,
+                                    user.displayName,
                                     style: TextStyle(
                                       color: Colors.brown,
                                       fontSize: 22.0,

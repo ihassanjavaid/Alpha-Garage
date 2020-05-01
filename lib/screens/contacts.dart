@@ -54,7 +54,7 @@ class ListItemWidget extends State<SwipeList> {
   }
 
   void getCurrentUser() async {
-    final temp = await Auth().getCurrentUser();
+    final temp = await Auth().currentUser;
     setState(() {
       user = temp;
     });

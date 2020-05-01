@@ -1,17 +1,17 @@
 import 'package:alphagarage/components/message_bubble.dart';
-import 'package:alphagarage/services/firestore_service.dart';
+import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/models/user_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
+import 'package:alphagarage/models/message_model.dart';
 
 class ConversationScreen extends StatefulWidget {
+  static const String id = "conversation_screen";
   final UserData user;
-  static String id = "conversation_screen";
-
-  ConversationScreen({this.user});
+  final List<Message> chatMessages;
+  ConversationScreen({this.user, this.chatMessages});
 
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
@@ -19,6 +19,7 @@ class ConversationScreen extends StatefulWidget {
 
 class _ConversationScreenState extends State<ConversationScreen> {
   final messageTextController = TextEditingController();
+  String _message = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,26 @@ class _ConversationScreenState extends State<ConversationScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            StreamBuilder<QuerySnapshot>(
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    Message message = widget.chatMessages[index];
+                    return MessageBubble(
+                      messageText: message.messageText,
+                      timestamp:
+                          DateTime.fromMillisecondsSinceEpoch(message.timestamp)
+                              .toString(),
+                      isMe: message.messageSender != widget.user.email,
+                    );
+                  },
+                  itemCount: widget.chatMessages.length,
+                ),
+              ),
+            ),
+            /*StreamBuilder<QuerySnapshot>(
               stream:
                   FirestoreService().firestore.collection('chats').snapshots(),
               builder: (context, snapshot) {
@@ -77,7 +97,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   ),
                 );
               },
-            ),
+            )*/
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -86,15 +106,31 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   Expanded(
                     child: TextField(
                       controller: messageTextController,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        _message = value;
+                      },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
-                    child: Text(
+                    onPressed: () async {
+                      final currentUser = await Auth().currentUser;
+                      // Create the message
+                      Message newMessage = Message(
+                        messageSender: currentUser.email,
+                        messageReceiver: widget.user.email,
+                        messageText: _message,
+                        timestamp: DateTime.now().millisecondsSinceEpoch,
+                      );
+                    },
+                    child:
+                        /*Text(
                       'Send',
                       style: kSendButtonTextStyle,
+                    )*/
+                        Icon(
+                      Icons.send,
+                      color: Colors.brown,
                     ),
                   ),
                 ],

@@ -24,6 +24,7 @@ class _UserMessagesState extends State<UserMessages> {
   NotificationData lastNotification;
   NotificationData n;
   FirebaseUser currentUser;
+  Auth _auth = Auth();
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _UserMessagesState extends State<UserMessages> {
   }
 
   setNotifications() async {
-    final currentUser = await Auth().getCurrentUser();
+    final currentUser = await _auth.currentUser;
     final currentUserData =
         await FirestoreService().getUserData(currentUser.email);
     if (!currentUserData.isAdmin) {
@@ -42,7 +43,7 @@ class _UserMessagesState extends State<UserMessages> {
   }
 
   void getCurrentUser() async {
-    final temp = await Auth().getCurrentUser();
+    final temp = await _auth.currentUser;
     setState(() {
       this.currentUser = temp;
     });
@@ -219,10 +220,11 @@ class AnnouncementBubble extends StatelessWidget {
                 GestureDetector(
                   child: Container(
                     child: ClipRRect(
-                        child: Image.network(imageReference),
+                      child: Image.network(imageReference),
                       borderRadius: BorderRadius.only(
-                        bottomLeft:
-                        isPrivate ? Radius.circular(0) : Radius.circular(18.5),
+                        bottomLeft: isPrivate
+                            ? Radius.circular(0)
+                            : Radius.circular(18.5),
                         bottomRight: Radius.circular(18.5),
                         topLeft: Radius.circular(18.5),
                         topRight: Radius.circular(18.5),
@@ -231,12 +233,12 @@ class AnnouncementBubble extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (value) =>
-                            ImageView(imageReference),
-                        ),
+                      context,
+                      MaterialPageRoute(
+                        builder: (value) => ImageView(imageReference),
+                      ),
                     );
-                   /* Navigator.push(
+                    /* Navigator.push(
                       context,
                       PageRouteBuilder(
                         pageBuilder: (c, a1, a2) => ImageView(imageReference),

@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
 
   Future<void> _decideRoute() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    final currentUser = await _auth.getCurrentUser();
+    final currentUser = await _auth.currentUser;
     final currentUserData =
         await _firestoreService.getUserData(currentUser.email);
 
@@ -327,7 +327,7 @@ class _LoginState extends State<Login> {
                             });
                             try {
                               final SharedPreferences pref =
-                              await SharedPreferences.getInstance();
+                                  await SharedPreferences.getInstance();
                               await _auth.registerUser(
                                   email: removeSpaces(this.email),
                                   password: this.password);

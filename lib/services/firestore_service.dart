@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/models/user_model.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:alphagarage/models/message_model.dart';
 
 enum MessageType {
   announcement,
@@ -128,6 +129,8 @@ class FirestoreService {
   }
 
   getAllAdmins() async {
+    await checkInternConnection();
+
     List<UserData> admins = [];
     List<UserData> users = await getAllUsers();
     for (var user in users) {
@@ -140,6 +143,8 @@ class FirestoreService {
   }
 
   getNonAdminUsers() async {
+    await checkInternConnection();
+
     List<UserData> nonAdminUsers = [];
     List<UserData> users = await getAllUsers();
     for (var user in users) {
@@ -174,6 +179,20 @@ class FirestoreService {
       'senderEmail': currentUser.email,
       'receiverEmail': receiverEmail,
       'timestamp': DateTime.now().millisecondsSinceEpoch
+    }, merge: true);
+  }
+
+  Future<void> sendMessage(Message message) async {
+    await checkInternConnection();
+
+    final DocumentReference documentReference =
+        _firestore.collection('chats').document();
+
+    await documentReference.setData({
+      'messageSender': message.messageSender,
+      'messageReceiver': message.messageReceiver,
+      'messageText': message.messageText,
+      'timestamp': message.timestamp,
     }, merge: true);
   }
 }
