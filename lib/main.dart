@@ -1,9 +1,9 @@
 import 'package:alphagarage/screens/announcement.dart';
+import 'package:alphagarage/screens/chats_screen.dart';
 import 'package:alphagarage/screens/contacts.dart';
 import 'package:alphagarage/screens/index.dart';
 import 'package:alphagarage/screens/login.dart';
 import 'package:alphagarage/screens/userMessages.dart';
-import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/screens/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:alphagarage/screens/conversation_screen.dart';

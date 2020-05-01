@@ -1,7 +1,7 @@
 import 'package:alphagarage/components/message_bubble.dart';
+import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
-import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/models/user_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';

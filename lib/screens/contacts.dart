@@ -1,5 +1,6 @@
 import 'package:alphagarage/components/sendMessage.dart';
 import 'package:alphagarage/components/speedDialButton.dart';
+import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -8,7 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/models/user_model.dart';
 
 class Contacts extends StatelessWidget {
   static const String id = 'contacts_screen';
