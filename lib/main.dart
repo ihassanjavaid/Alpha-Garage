@@ -1,13 +1,12 @@
-import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/screens/announcement.dart';
 import 'package:alphagarage/screens/contacts.dart';
 import 'package:alphagarage/screens/index.dart';
 import 'package:alphagarage/screens/login.dart';
 import 'package:alphagarage/screens/userMessages.dart';
-import 'package:alphagarage/widgets/recent_chats.dart';
+import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/screens/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:alphagarage/screens/chat_screen.dart';
+import 'package:alphagarage/screens/conversation_screen.dart';
 
 void main() => runApp(Alfa());
 
@@ -25,20 +24,19 @@ class Alfa extends StatelessWidget {
               screens: <Widget>[
                 Announcement(),
                 UserMessages(),
-                RecentChats(),
+                ChatsScreen(),
                 Contacts(),
               ],
             ),
         Contacts.id: (context) => Contacts(),
         Announcement.id: (context) => Announcement(),
-        RecentChats.id: (context) => RecentChats(),
+        ChatsScreen.id: (context) => ChatsScreen(),
         UserMessages.id: (context) => UserMessages(),
       },
     );
   }
 }
 
-// TODO fix the Android app Icon through ImageAsset
 class RouteDecider extends StatelessWidget {
   static const String id = 'route_decider';
 
@@ -46,8 +44,6 @@ class RouteDecider extends StatelessWidget {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final String userId = pref.getString('email');
     final bool isAdmin = pref.getBool('isAdmin');
-
-
 
     if (userId != null) {
       print('Logged in automatically');

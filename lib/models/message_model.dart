@@ -1,19 +1,30 @@
-import 'package:alphagarage/models/user_model.dart';
-
 class Message {
-  final User sender;
-  final String
-      time; // Would usually be type DateTime or Firebase Timestamp in production apps
-  final String text;
-  final bool isLiked;
-  final bool unread;
+  final String messageSender;
+  final String timestamp;
+  final String messageText;
+  bool _isRead = false;
 
   Message({
-    this.sender,
-    this.time,
-    this.text,
-    this.isLiked,
-    this.unread,
+    this.messageSender,
+    this.messageText,
+    this.timestamp,
   });
-}
 
+  factory Message.fromMap(Map<String, dynamic> message) {
+    return Message(
+      messageSender: message['messageSender'],
+      messageText: message['messageText'],
+      timestamp: message['timestamp'],
+    );
+  }
+
+  bool get isRead => _isRead;
+
+  void toggleMessageRead() {
+    _isRead = !_isRead;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'messageText': this.messageText, 'timestamp': this.timestamp};
+  }
+}

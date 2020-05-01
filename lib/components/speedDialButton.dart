@@ -1,8 +1,6 @@
 import 'package:alphagarage/components/addContactDialog.dart';
-import 'package:alphagarage/models/user_model.dart';
-import 'package:alphagarage/screens/chat_screen.dart';
 import 'package:alphagarage/services/auth_service.dart';
-import 'package:alphagarage/widgets/recent_chats.dart';
+import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/screens/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -97,7 +95,7 @@ class SpeedDialButton {
           label: 'Chiacchierare',
           labelStyle: TextStyle(fontSize: 18.0),
           onTap: () {
-            Navigator.pushNamed(context, RecentChats.id);
+            Navigator.pushNamed(context, ChatsScreen.id);
           },
         ),
       ],

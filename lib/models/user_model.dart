@@ -1,9 +1,7 @@
-class User {
-  final int id;
-  final String name;
+class UserData {
+  UserData({this.email, this.displayName, this.isAdmin = false});
 
-  User({
-    this.id,
-    this.name,
-  });
+  final String displayName;
+  final String email;
+  final bool isAdmin;
 }

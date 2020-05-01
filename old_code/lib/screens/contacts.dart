@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alphagarage/utilities/userData.dart';
+import 'file:///D:/Users/mtbm9/AndroidStudioProjects/Alpha-Garage/lib/models/user_model.dart';
 
 class Contacts extends StatelessWidget {
   static const String id = 'contacts_screen';
@@ -154,7 +154,8 @@ class ListItemWidget extends State<SwipeList> {
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 3, 0, 3),
                                       child: Container(
-                                        width: userList[index].isAdmin ? 68 : 58,
+                                        width:
+                                            userList[index].isAdmin ? 68 : 58,
                                         decoration: BoxDecoration(
                                             color: userList[index].isAdmin
                                                 ? Colors.brown
