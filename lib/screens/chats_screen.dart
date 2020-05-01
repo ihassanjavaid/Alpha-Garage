@@ -3,6 +3,7 @@ import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:alphagarage/screens/conversation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,11 +52,19 @@ class _ChatsScreenState extends State<ChatsScreen> {
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(child: CircularProgressIndicator());
-            return StreamBuilder(
+            return StreamBuilder<QuerySnapshot>(
               stream: FirestoreService().firestore
                   .collection('chats')
                   .snapshots(),
               builder: (context, chatSnapshot)  {
+
+                List<Message> messagesList = [];
+                final newChat = chatSnapshot.data.documentChanges;
+                newChat.forEach((chat) {
+                  Message message = Message.fromMap(chat.document.data);
+                  messagesList.add(message);
+                });
+
                 return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
