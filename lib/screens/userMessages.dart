@@ -1,4 +1,5 @@
 import 'package:alphagarage/components/speedDialButton.dart';
+import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/screens/imageViewer.dart';
 import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
@@ -23,7 +24,7 @@ class _UserMessagesState extends State<UserMessages> {
   List<NotificationData> _notifications = [];
   NotificationData lastNotification;
   NotificationData n;
-  FirebaseUser currentUser;
+  UserData currentUser;
   Auth _auth = Auth();
 
   @override

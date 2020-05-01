@@ -1,4 +1,5 @@
 import 'package:alphagarage/models/user_model.dart';
+import 'package:alphagarage/services/auth_service.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -18,12 +19,15 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   FirestoreService _firestoreService = FirestoreService();
+  Auth _auth = Auth();
+  UserData _currentUser;
 
   getItems() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final bool isAdmin = pref.getBool('isAdmin');
 
-//    await getChats();
+    _currentUser = await _auth.currentUser;
+
     try {
       if (isAdmin) {
         return await _firestoreService.getNonAdminUsers();
@@ -76,6 +80,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           MaterialPageRoute(
                             builder: (context) => ConversationScreen(
                               user: user,
+                              currentUser: _currentUser,
                             ),
                           ),
                         ),
@@ -89,14 +94,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                   height: 70.0,
                                   width: 70.0,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        2, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                     child: CircularProfileAvatar(
                                       "",
                                       backgroundColor: Colors.grey,
                                       initialsText: Text(
-                                        user.displayName[0]
-                                            .toUpperCase(),
+                                        user.displayName[0].toUpperCase(),
                                         style: TextStyle(
                                           fontSize: 42,
                                           color: Colors.white,
@@ -110,11 +114,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                 Container(
                                   height: 100,
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        10, 2, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(10, 2, 0, 0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Expanded(
                                           flex: 1,
@@ -124,12 +127,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                             overflow: TextOverflow.clip,
                                             style: TextStyle(
                                               fontSize: 22,
-                                              fontStyle:
-                                              FontStyle.italic,
+                                              fontStyle: FontStyle.italic,
                                               color: Colors.brown,
                                               fontWeight: isChatofUser(
-                                                  messagesList,
-                                                  user)
+                                                      messagesList, user)
                                                   ? FontWeight.bold
                                                   : FontWeight.normal,
                                             ),
@@ -139,45 +140,39 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                           flex: 1,
                                           child: Padding(
                                             padding:
-                                            EdgeInsets.fromLTRB(
-                                                0, 3, 0, 3),
+                                                EdgeInsets.fromLTRB(0, 3, 0, 3),
                                             child: Container(
-                                              width: isChatofUser(messagesList, user) ? 60 : 70,
+                                              width: isChatofUser(
+                                                      messagesList, user)
+                                                  ? 60
+                                                  : 70,
                                               decoration: BoxDecoration(
                                                   color: isChatofUser(
-                                                      messagesList,
-                                                      user)
+                                                          messagesList, user)
                                                       ? Colors.brown
                                                       : Colors.grey,
                                                   border: Border.all(
                                                       color: isChatofUser(
-                                                          messagesList,
-                                                          user)
+                                                              messagesList,
+                                                              user)
                                                           ? Colors.brown
                                                           : Colors.grey),
                                                   borderRadius:
-                                                  BorderRadius.all(
-                                                      Radius
-                                                          .circular(
-                                                          10))),
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
                                               child: Align(
-                                                alignment:
-                                                Alignment.center,
+                                                alignment: Alignment.center,
                                                 child: Text(
                                                   isChatofUser(
-                                                      messagesList,
-                                                      user)
+                                                          messagesList, user)
                                                       ? 'Nuovo'
                                                       : 'Vecchio',
-                                                  textAlign:
-                                                  TextAlign.center,
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      color:
-                                                      Colors.white,
+                                                      color: Colors.white,
                                                       fontSize: 14,
                                                       fontStyle:
-                                                      FontStyle
-                                                          .italic),
+                                                          FontStyle.italic),
                                                 ),
                                               ),
                                             ),
@@ -187,22 +182,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                           flex: 1,
                                           child: Padding(
                                             padding:
-                                            EdgeInsets.fromLTRB(
-                                                0, 2, 0, 2),
+                                                EdgeInsets.fromLTRB(0, 2, 0, 2),
                                             child: Container(
                                               width: 260,
                                               child: Text(
                                                 "Toccare per aprire",
                                                 style: TextStyle(
                                                   fontSize: 15,
-                                                  fontStyle:
-                                                  FontStyle.italic,
+                                                  fontStyle: FontStyle.italic,
                                                   fontWeight: isChatofUser(
-                                                      messagesList,
-                                                      user)
+                                                          messagesList, user)
                                                       ? FontWeight.bold
-                                                      : FontWeight
-                                                      .normal,
+                                                      : FontWeight.normal,
                                                   color: Colors.grey,
                                                 ),
                                               ),

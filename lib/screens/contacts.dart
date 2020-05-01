@@ -45,7 +45,7 @@ class SwipeList extends StatefulWidget {
 }
 
 class ListItemWidget extends State<SwipeList> {
-  FirebaseUser user;
+  UserData user;
 
   @override
   void initState() {

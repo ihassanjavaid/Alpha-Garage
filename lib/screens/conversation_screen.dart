@@ -12,11 +12,11 @@ import 'package:alphagarage/models/message_model.dart';
 class ConversationScreen extends StatelessWidget {
   static const String id = "conversation_screen";
   final UserData user;
-  
-  ConversationScreen({this.user});
+  final UserData currentUser;
+
+  ConversationScreen({this.user, this.currentUser});
 
   final messageTextController = TextEditingController();
-  
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,16 @@ class ConversationScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirestoreService().firestore
-                        .collection('chats').orderBy('timestamp')
-                        .snapshots(),
+                  stream: FirestoreService()
+                      .firestore
+                      .collection('chats')
+                      .orderBy('timestamp')
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
-                        child: Text('No messages yet\nOr no internet connection'),
+                        child:
+                            Text('No messages yet\nOr no internet connection'),
                       );
                     }
 
@@ -59,20 +62,32 @@ class ConversationScreen extends StatelessWidget {
                     List<MessageBubble> messageBubbles = [];
                     for (var message in messages) {
                       Message chatMessage = Message.fromMap(message.data);
-                      if (chatMessage.messageSender == this.user.email || chatMessage.messageReceiver == this.user.email) {
+                      if (chatMessage.messageSender == this.user.email &&
+                              chatMessage.messageReceiver ==
+                                  this.currentUser.email ||
+                          chatMessage.messageReceiver == this.user.email &&
+                              chatMessage.messageSender ==
+                                  this.currentUser.email) {
                         MessageBubble messageBubble = MessageBubble(
                           messageText: chatMessage.messageText,
-                          timestamp: DateTime.fromMillisecondsSinceEpoch(chatMessage.timestamp).toString(),
-                          isMe: chatMessage.messageSender == user.email,
+                          timestamp: DateTime.fromMillisecondsSinceEpoch(
+                                  chatMessage.timestamp)
+                              .toString(),
+                          isMe: chatMessage.messageReceiver == user.email,
                         );
                         messageBubbles.add(messageBubble);
                       }
                     }
-                    return Expanded(child: ListView(
-                      reverse: true,
-                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0,),
-                      children: messageBubbles,
-                    ),);
+                    return Expanded(
+                      child: ListView(
+                        reverse: true,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 20.0,
+                        ),
+                        children: messageBubbles,
+                      ),
+                    );
                   },
                 ),
               ),

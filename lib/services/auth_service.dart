@@ -1,10 +1,22 @@
+import 'package:alphagarage/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:alphagarage/services/firestore_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
   final _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> get currentUser async => await _auth.currentUser();
+  Future<UserData> get currentUser async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    bool isCurrentUserAdmin = pref.getBool('isAdmin');
+
+    final user = await _auth.currentUser();
+    return UserData(
+      displayName: user.displayName,
+      email: user.email,
+      isAdmin: isCurrentUserAdmin,
+    );
+  }
 
   Future<void> signOut() async {
     await _auth.signOut();
