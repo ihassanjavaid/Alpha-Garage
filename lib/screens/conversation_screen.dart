@@ -101,7 +101,8 @@ class ConversationScreen extends StatelessWidget {
                         messageText: _message,
                         timestamp: DateTime.now().millisecondsSinceEpoch,
                       );
-                      
+                      await FirestoreService().sendMessage(newMessage);
+                      messageTextController.clear();
                     },
                     child:
                         /*Text(
