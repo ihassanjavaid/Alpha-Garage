@@ -20,22 +20,6 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   FirestoreService _firestoreService = FirestoreService();
-  
-
-  initState() {
-    super.initState();
-    getChats();
-  }
-
-  getChats() async {
-    await for (var snapshot
-        in _firestoreService.firestore.collection('chats').snapshots()) {
-      for (var chat in snapshot.documents) {
-        Message message = Message.fromMap(chat.data);
-        _chatMessages.add(message);
-      }
-    }
-  }
 
   getItems() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
