@@ -1,8 +1,10 @@
 import 'package:alphagarage/components/message_bubble.dart';
 import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/services/auth_service.dart';
+import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:alphagarage/models/message_model.dart';
@@ -10,8 +12,8 @@ import 'package:alphagarage/models/message_model.dart';
 class ConversationScreen extends StatelessWidget {
   static const String id = "conversation_screen";
   final UserData user;
-  final List<Message> chatMessages;
-  ConversationScreen({this.user, this.chatMessages});
+  
+  ConversationScreen({this.user});
 
   final messageTextController = TextEditingController();
   
@@ -42,19 +44,36 @@ class ConversationScreen extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    Message message = this.chatMessages[index];
-                    return MessageBubble(
-                      messageText: message.messageText,
-                      timestamp:
-                          DateTime.fromMillisecondsSinceEpoch(message.timestamp)
-                              .toString(),
-                      isMe: message.messageSender != this.user.email,
-                    );
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirestoreService().firestore
+                        .collection('chats')
+                        .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: Text('No messages yet\nOr no internet connection'),
+                      );
+                    }
+                    List<Message> chatMessages = [];
+                    final messages = snapshot.data.documents.reversed;
+                    List<MessageBubble> messageBubbles = [];
+                    for (var message in messages) {
+                      Message message = Message.fromMap(message.data);
+                      if (message.messageSender == this.user.email || message.messageReceiver == this.user.email) {
+                        MessageBubble messageBubble = MessageBubble(
+                          messageText: message.messageText,
+                          timestamp: DateTime.fromMillisecondsSinceEpoch(message.timestamp).toString(),
+                          isMe: message.messageSender == user.email,
+                        );
+                        messageBubbles.add(messageBubble);
+                      }
+                    }
+                    return Expanded(child: ListView(
+                      reverse: true,
+                      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0,),
+                      children: messageBubbles,
+                    ),);
                   },
-                  itemCount: this.chatMessages.length,
                 ),
               ),
             ),
@@ -138,3 +157,18 @@ class ConversationScreen extends StatelessWidget {
     );
   }
 }
+
+// ListView.builder(
+//                   reverse: true,
+//                   itemBuilder: (context, index) {
+//                     Message message = this.chatMessages[index];
+//                     return MessageBubble(
+//                       messageText: message.messageText,
+//                       timestamp:
+//                           DateTime.fromMillisecondsSinceEpoch(message.timestamp)
+//                               .toString(),
+//                       isMe: message.messageSender != this.user.email,
+//                     );
+//                   },
+//                   itemCount: this.chatMessages.length,
+//                 )

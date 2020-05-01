@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:alphagarage/models/user_model.dart';
 import 'package:alphagarage/services/firestore_service.dart';
 import 'package:alphagarage/utilities/constants.dart';
@@ -9,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:alphagarage/screens/conversation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:alphagarage/models/message_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatsScreen extends StatefulWidget {
   static String id = "chats_screen";
@@ -64,10 +61,11 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         .collection('chats')
                         .snapshots(),
                     builder: (context, snapshotDoc) {
-                      final chats = snapshotDoc.data.documents.reverse;
+                      if (snapshotDoc.hasData) {
+                      final chats = snapshotDoc.data.documents.reversed;
                       List<Message> _chatMessages = [];
                       for (var chat in chats) {
-                        Message message = Message.fromMap(chat);
+                        Message message = Message.fromMap(chat.data);
                         _chatMessages.add(message);
                       }
                       List userChatMessages = _chatMessages.where((message) => message.messageSender == user.email || message.messageReceiver == user.email ).toList();
@@ -77,7 +75,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           MaterialPageRoute(
                             builder: (context) => ConversationScreen(
                               user: user,
-                              chatMessages: userChatMessages,
                             ),
                           ),
                         ),
@@ -182,7 +179,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             ),
                           ),
                         ),
+                      
                       );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                     });
               },
             );
