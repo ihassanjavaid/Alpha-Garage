@@ -54,16 +54,16 @@ class ConversationScreen extends StatelessWidget {
                         child: Text('No messages yet\nOr no internet connection'),
                       );
                     }
-                    List<Message> chatMessages = [];
+
                     final messages = snapshot.data.documents.reversed;
                     List<MessageBubble> messageBubbles = [];
                     for (var message in messages) {
-                      Message message = Message.fromMap(message.data);
-                      if (message.messageSender == this.user.email || message.messageReceiver == this.user.email) {
+                      Message chatMessage = Message.fromMap(message.data);
+                      if (chatMessage.messageSender == this.user.email || chatMessage.messageReceiver == this.user.email) {
                         MessageBubble messageBubble = MessageBubble(
-                          messageText: message.messageText,
-                          timestamp: DateTime.fromMillisecondsSinceEpoch(message.timestamp).toString(),
-                          isMe: message.messageSender == user.email,
+                          messageText: chatMessage.messageText,
+                          timestamp: DateTime.fromMillisecondsSinceEpoch(chatMessage.timestamp).toString(),
+                          isMe: chatMessage.messageSender == user.email,
                         );
                         messageBubbles.add(messageBubble);
                       }
