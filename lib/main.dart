@@ -6,7 +6,6 @@ import 'package:alphagarage/screens/login.dart';
 import 'package:alphagarage/screens/userMessages.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:alphagarage/screens/conversation_screen.dart';
 
 void main() => runApp(Alfa());
 
