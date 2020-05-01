@@ -70,178 +70,154 @@ class _ChatsScreenState extends State<ChatsScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       List<UserData> users = snapshot.data;
                       final UserData user = users[index];
-                      return StreamBuilder(
-                          stream: _firestoreService.firestore
-                              .collection('chats')
-                              .snapshots(),
-                          builder: (context, snapshotDoc) {
-                            if (snapshotDoc.hasData) {
-                              final chats = snapshotDoc.data.documents.reversed;
-                              List<Message> _chatMessages = [];
-                              for (var chat in chats) {
-                                Message message = Message.fromMap(chat.data);
-                                _chatMessages.add(message);
-                              }
-                              List userChatMessages = _chatMessages
-                                  .where((message) =>
-                                      message.messageSender == user.email ||
-                                      message.messageReceiver == user.email)
-                                  .toList();
-                              return GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ConversationScreen(
-                                      user: user,
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConversationScreen(
+                              user: user,
+                            ),
+                          ),
+                        ),
+                        child: Card(
+                          elevation: 10,
+                          child: Container(
+                            height: 90.0,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  height: 70.0,
+                                  width: 70.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        2, 0, 0, 0),
+                                    child: CircularProfileAvatar(
+                                      "",
+                                      backgroundColor: Colors.grey,
+                                      initialsText: Text(
+                                        user.displayName[0]
+                                            .toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 42,
+                                          color: Colors.white,
+                                          fontStyle: FontStyle.italic,
+                                        ),
+                                      ),
+                                      elevation: 2.0,
                                     ),
                                   ),
                                 ),
-                                child: Card(
-                                  elevation: 10,
-                                  child: Container(
-                                    height: 90.0,
-                                    child: Row(
+                                Container(
+                                  height: 100,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        10, 2, 0, 0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Container(
-                                          height: 70.0,
-                                          width: 70.0,
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                2, 0, 0, 0),
-                                            child: CircularProfileAvatar(
-                                              "",
-                                              backgroundColor: Colors.grey,
-                                              initialsText: Text(
-                                                user.displayName[0]
-                                                    .toUpperCase(),
-                                                style: TextStyle(
-                                                  fontSize: 42,
-                                                  color: Colors.white,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                              ),
-                                              elevation: 2.0,
+                                        Expanded(
+                                          flex: 1,
+                                          child: AutoSizeText(
+                                            user.displayName,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.clip,
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              fontStyle:
+                                              FontStyle.italic,
+                                              color: Colors.brown,
+                                              fontWeight: isChatofUser(
+                                                  messagesList,
+                                                  user)
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          height: 100,
+                                        Expanded(
+                                          flex: 1,
                                           child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 2, 0, 0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: AutoSizeText(
-                                                    user.displayName,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.clip,
-                                                    style: TextStyle(
-                                                      fontSize: 22,
+                                            padding:
+                                            EdgeInsets.fromLTRB(
+                                                0, 3, 0, 3),
+                                            child: Container(
+                                              width: isChatofUser(messagesList, user) ? 60 : 70,
+                                              decoration: BoxDecoration(
+                                                  color: isChatofUser(
+                                                      messagesList,
+                                                      user)
+                                                      ? Colors.brown
+                                                      : Colors.grey,
+                                                  border: Border.all(
+                                                      color: isChatofUser(
+                                                          messagesList,
+                                                          user)
+                                                          ? Colors.brown
+                                                          : Colors.grey),
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius
+                                                          .circular(
+                                                          10))),
+                                              child: Align(
+                                                alignment:
+                                                Alignment.center,
+                                                child: Text(
+                                                  isChatofUser(
+                                                      messagesList,
+                                                      user)
+                                                      ? 'Nuovo'
+                                                      : 'Vecchio',
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  style: TextStyle(
+                                                      color:
+                                                      Colors.white,
+                                                      fontSize: 14,
                                                       fontStyle:
-                                                          FontStyle.italic,
-                                                      color: Colors.brown,
-                                                      fontWeight: isChatofUser(
-                                                              messagesList,
-                                                              user)
-                                                          ? FontWeight.bold
-                                                          : FontWeight.normal,
-                                                    ),
-                                                  ),
+                                                      FontStyle
+                                                          .italic),
                                                 ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            0, 3, 0, 3),
-                                                    child: Container(
-                                                      width: 50,
-                                                      decoration: BoxDecoration(
-                                                          color: isChatofUser(
-                                                                  messagesList,
-                                                                  user)
-                                                              ? Colors.brown
-                                                              : Colors.white,
-                                                          border: Border.all(
-                                                              color: isChatofUser(
-                                                                      messagesList,
-                                                                      user)
-                                                                  ? Colors.brown
-                                                                  : Colors
-                                                                      .white),
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          isChatofUser(
-                                                                  messagesList,
-                                                                  user)
-                                                              ? 'New'
-                                                              : '',
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14,
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .italic),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding:
+                                            EdgeInsets.fromLTRB(
+                                                0, 2, 0, 2),
+                                            child: Container(
+                                              width: 260,
+                                              child: Text(
+                                                "Toccare per aprire",
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontStyle:
+                                                  FontStyle.italic,
+                                                  fontWeight: isChatofUser(
+                                                      messagesList,
+                                                      user)
+                                                      ? FontWeight.bold
+                                                      : FontWeight
+                                                      .normal,
+                                                  color: Colors.grey,
                                                 ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            0, 2, 0, 2),
-                                                    child: Container(
-                                                      width: 260,
-                                                      child: Text(
-                                                        "Toccare per aprire",
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                          fontWeight: isChatofUser(
-                                                                  messagesList,
-                                                                  user)
-                                                              ? FontWeight.bold
-                                                              : FontWeight
-                                                                  .normal,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
-                                ),
-                              );
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          });
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   );
                 });
