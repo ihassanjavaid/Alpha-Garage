@@ -118,10 +118,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                                   fontSize: 42,
                                                   color: Colors.white,
                                                   fontStyle: FontStyle.italic,
-                                                  fontWeight: isChatofUser(
-                                                          messagesList, user)
-                                                      ? FontWeight.bold
-                                                      : FontWeight.normal,
                                                 ),
                                               ),
                                               elevation: 10.0,
