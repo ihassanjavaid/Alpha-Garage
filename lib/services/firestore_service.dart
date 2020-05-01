@@ -33,18 +33,37 @@ class FirestoreService {
     final deviceToken = await getDeviceToken();
     final currentUser = await _auth.currentUser();
 
-    final tokens = await _firestore.collection('deviceTokens').getDocuments();
+    // Tap into the user's device tokens
+    // Get current user document ID
+    final currentUserDocuments = await _firestore
+        .collection('users')
+        .where('email', isEqualTo: currentUser.email)
+        .getDocuments();
 
-    for (var token in tokens.documents) {
-      if (deviceToken == token['deviceToken'] &&
-          currentUser.email == token['email']) return;
+    String currentUserDocumentID;
+    for (var document in currentUserDocuments.documents) {
+      currentUserDocumentID = document.documentID;
     }
 
-    DocumentReference documentReference =
-        _firestore.collection('deviceTokens').document();
+    // Get the device token collection
+    QuerySnapshot userDeviceTokens = await _firestore
+        .collection('users')
+        .document(currentUserDocumentID)
+        .collection('deviceTokens')
+        .getDocuments();
 
-    await documentReference
-        .setData({'deviceToken': deviceToken, 'email': currentUser.email});
+    // Add device token if not already added
+    for (var token in userDeviceTokens.documents) {
+      if (deviceToken == token['deviceToken']) return;
+    }
+
+    DocumentReference documentReference = _firestore
+        .collection('users')
+        .document(currentUserDocumentID)
+        .collection('deviceTokens')
+        .document();
+
+    await documentReference.setData({'deviceToken': deviceToken});
   }
 
   Future<void> registerUser({
@@ -140,6 +159,8 @@ class FirestoreService {
       MessageType messageType}) async {
     await checkInternConnection();
 
+    final FirebaseUser currentUser = await _auth.currentUser();
+
     final DocumentReference documentReference =
         _firestore.collection('messages').document();
 
@@ -150,6 +171,7 @@ class FirestoreService {
       'messageType': messageType == MessageType.announcement
           ? 'announcement'
           : 'privateMessage',
+      'senderEmail': currentUser.email,
       'receiverEmail': receiverEmail,
       'timestamp': DateTime.now().millisecondsSinceEpoch
     }, merge: true);

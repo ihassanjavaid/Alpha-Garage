@@ -46,14 +46,12 @@ class RouteDecider extends StatelessWidget {
     final bool isAdmin = pref.getBool('isAdmin');
 
     if (userId != null) {
-      print('Logged in automatically');
       if (isAdmin ?? false)
         Navigator.pushReplacementNamed(context, Index.id);
       else
         Navigator.pushReplacementNamed(context, UserMessages.id);
       return;
     } else {
-      print('First time sign in');
       Navigator.pushReplacementNamed(context, Login.id);
     }
   }
