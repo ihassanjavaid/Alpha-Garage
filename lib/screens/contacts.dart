@@ -113,7 +113,9 @@ class ListItemWidget extends State<SwipeList> {
                                     : Colors.grey,
                                 initialsText: Text(
                                   userList != null
-                                      ? userList[index].displayName[0]
+                                      ? userList[index]
+                                          .displayName[0]
+                                          .toUpperCase()
                                       : 'A',
                                   style: TextStyle(
                                     fontSize: 42,
@@ -175,7 +177,8 @@ class ListItemWidget extends State<SwipeList> {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 14),
+                                                fontSize: 14,
+                                                fontStyle: FontStyle.italic),
                                           ),
                                         ),
                                       ),
