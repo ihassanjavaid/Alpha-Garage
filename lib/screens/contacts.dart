@@ -92,7 +92,9 @@ class ListItemWidget extends State<SwipeList> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return SendMessageDialog();
+                          return SendMessageDialog(
+                            receiverEmail: userList[index].email,
+                          );
                         });
                   },
                   child: Card(
