@@ -16,13 +16,11 @@ exports.notificationTriggerUpdated = functions.firestore.document('messages/{mes
  
     var tokens = []; 
     var usersDocuments
+    var allUsersdeviceTokensDocuments = [];
 
-    if (newData.receiverEmail === null) {
+    if (newData.messageType === 'announcement') {
         // Announcement message
         usersDocuments = await firestore.collection('users').get();
-        var allUsersdeviceTokensDocuments = [];
-
-        
     } else {
         // Private message
         usersDocuments = await firestore.collection('users').where('email', '==', newData.receiverEmail).get();
@@ -41,7 +39,7 @@ exports.notificationTriggerUpdated = functions.firestore.document('messages/{mes
 
 
     for (var deviceTokenDocument in allUsersdeviceTokensDocuments) {
-        deviceTokenDocument.forEach((deviceToken) => tokens.push(deviceToken));
+        deviceTokenDocument.forEach((token) => tokens.push(token.data().deviceToken));
     }
 
     var payload = {
