@@ -3,8 +3,7 @@ const admin = require('firebase-admin');
 
 admin.initializeApp(functions.config().functions);
 
-var newData;
-var firestore = admin.firestore();
+var notificationData;
 
 exports.notificationTriggerUpdated = functions.firestore.document('messages/{messageId}').onCreate(async (snapshot, context) => {
     if (snapshot.empty) {
@@ -12,39 +11,27 @@ exports.notificationTriggerUpdated = functions.firestore.document('messages/{mes
         return;
     }
 
-    newData = snapshot.data();
+    notificationData = snapshot.data();
  
     var tokens = []; 
-    var usersDocuments
-    var allUsersdeviceTokensDocuments = [];
 
-    if (newData.messageType === 'announcement') {
-        // Announcement message
-        usersDocuments = await firestore.collection('users').get();
+    const deviceTokens = await admin.firestore().collection('deviceTokens').get();
+
+    if (notificationData.messageType === 'privateMessage') {
+        for (var privateToken of deviceTokens.docs) {
+            if (privateToken.data().email === notificationData.receiverEmail) {
+                tokens.push(privateToken.data().deviceToken);
+            }
+        }
     } else {
-        // Private message
-        usersDocuments = await firestore.collection('users').where('email', '==', newData.receiverEmail).get();
-
-    }
-
-    usersDocuments.forEach(async function (userDocument) {
-        if (userDocument.data().email === newData.senderEmail) {
-            // Skip the user who posted the message
-            
-        } else {
-            const deviceTokensDocuments = await firestore.collection('users').doc(userDocument.data().documentID).collection('deviceTokens').get();
-            allUsersdeviceTokensDocuments.push(deviceTokensDocuments);
-        }      
-    });
-
-
-    for (var deviceTokenDocument in allUsersdeviceTokensDocuments) {
-        deviceTokenDocument.forEach((token) => tokens.push(token.data().deviceToken));
+        for (var token of deviceTokens.docs) {
+            tokens.push(token.data().deviceToken);
+        } 
     }
 
     var payload = {
-        notification : {title: 'Announcement', body: newData.messageTitle, sound: 'default'},
-        data: {click_action: 'FLUTTER_NOTIFICATION_CLICK' , message: newData.message}
+        notification : {title: notificationData.messageTitle, body: notificationData.messageText, sound: 'default'},
+        data: {click_action: 'FLUTTER_NOTIFICATION_CLICK' , message: notificationData.messageText}
     };
 
     try {
