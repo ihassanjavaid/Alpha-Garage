@@ -36,8 +36,6 @@ class FirestoreService {
     final currentUser = await _auth.currentUser();
     bool updateToken = false;
 
-
-
     // Tap into the user's device tokens
     // Get current user document ID
 
@@ -52,49 +50,44 @@ class FirestoreService {
     // }
 
     // Get the device token collection
-    QuerySnapshot userDeviceTokens = await _firestore
-        .collection('deviceTokens')
-        .getDocuments();
-
-    
+    QuerySnapshot userDeviceTokens =
+        await _firestore.collection('deviceTokens').getDocuments();
 
     // Add device token if not already added
     for (var token in userDeviceTokens.documents) {
       DeviceToken deviceToken = DeviceToken.fromMap(token.data);
-      if (currentDeviceToken == deviceToken.deviceToken && deviceToken.associatedUserEmail == currentUser.email) {
+      if (currentDeviceToken == deviceToken.deviceToken &&
+          deviceToken.associatedUserEmail == currentUser.email) {
         // Skip
         return;
-      } else if (currentDeviceToken == deviceToken.deviceToken && deviceToken.associatedUserEmail != currentUser.email) {
-        
-      }
+      } else if (currentDeviceToken == deviceToken.deviceToken &&
+          deviceToken.associatedUserEmail != currentUser.email) {}
     }
-    
-
 
     // Set data as required
     if (updateToken) {
       // Update the associate user
       // Get device token document reference
-      final documents = await _firestore.collection('deviceTokens').where('deviceToken', isEqualTo: currentDeviceToken).getDocuments();
+      final documents = await _firestore
+          .collection('deviceTokens')
+          .where('deviceToken', isEqualTo: currentDeviceToken)
+          .getDocuments();
 
       String documentId = '';
       for (var document in documents.documents) {
         documentId = document.documentID;
       }
 
-      DocumentReference documentReference = _firestore.collection('deviceTokens').document(documentId);
+      DocumentReference documentReference =
+          _firestore.collection('deviceTokens').document(documentId);
       documentReference.updateData({'email': currentUser.email});
     } else {
       // Create new document
-      DocumentReference documentReference = _firestore.collection('deviceTokens').document();
-      await documentReference.setData({
-        'deviceToken': currentDeviceToken,
-        'email': currentUser.email
-        });
+      DocumentReference documentReference =
+          _firestore.collection('deviceTokens').document();
+      await documentReference.setData(
+          {'deviceToken': currentDeviceToken, 'email': currentUser.email});
     }
-    
-
-    
   }
 
   Future<void> registerUser({
