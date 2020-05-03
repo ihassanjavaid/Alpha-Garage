@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:alphagarage/screens/announcement.dart';
 import 'package:alphagarage/screens/chats_screen.dart';
 import 'package:alphagarage/screens/contacts.dart';
 import 'package:alphagarage/screens/index.dart';
 import 'package:alphagarage/screens/login.dart';
 import 'package:alphagarage/screens/userMessages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,11 +42,15 @@ class Alfa extends StatelessWidget {
 class RouteDecider extends StatelessWidget {
   static const String id = 'route_decider';
 
+  Future<void> fakeDelay() async {
+    sleep(Duration(seconds: 5));
+  }
+
   void autoLogin(context) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final String userId = pref.getString('email');
     final bool isAdmin = pref.getBool('isAdmin');
-
+    await fakeDelay();
     if (userId != null) {
       if (isAdmin ?? false)
         Navigator.pushReplacementNamed(context, Index.id);
@@ -58,6 +65,17 @@ class RouteDecider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     autoLogin(context);
-    return Container();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              'images/splashscreen.png',
+              fit: BoxFit.contain,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
